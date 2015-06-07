@@ -12,6 +12,7 @@ import itertools
 import shutil
 import codecs
 
+
 def _getMatchFunc(pattern):
     '''
     An unsophisticated pattern matching function
@@ -25,7 +26,7 @@ def _getMatchFunc(pattern):
         return fullStr[:len(subStr)] == subStr
             
     def endsWith(subStr, fullStr):
-        return fullStr[-1*len(subStr):] == subStr
+        return fullStr[-1 * len(subStr):] == subStr
     
     def inStr(subStr, fullStr):
         return subStr in fullStr
@@ -49,27 +50,26 @@ def findFiles(path, filterPaths=False, filterExt=None, filterPattern=None,
               skipIfNameInList=None, stripExt=False):
     
     fnList = os.listdir(path)
-    
-    
-    if filterPaths == True:
-        fnList = [folderName for folderName in fnList if os.path.isdir(os.path.join(path, folderName))]    
+       
+    if filterPaths is True:
+        fnList = [folderName for folderName in fnList
+                  if os.path.isdir(os.path.join(path, folderName))]
 
-
-    if filterExt != None:
-        splitFNList = [[fn,] + list(os.path.splitext(fn)) for fn in fnList]
+    if filterExt is not None:
+        splitFNList = [[fn, ] + list(os.path.splitext(fn)) for fn in fnList]
         fnList = [fn for fn, name, ext in splitFNList if ext == filterExt]
         
-        
-    if filterPattern != None:
-        splitFNList = [[fn,] + list(os.path.splitext(fn)) for fn in fnList]
+    if filterPattern is not None:
+        splitFNList = [[fn, ] + list(os.path.splitext(fn)) for fn in fnList]
         matchFunc = _getMatchFunc(filterPattern)
         fnList = [fn for fn, name, ext in splitFNList if matchFunc(name)]
     
-    if skipIfNameInList != None:
+    if skipIfNameInList is not None:
         targetNameList = [os.path.splitext(fn)[0] for fn in skipIfNameInList]
-        fnList = [fn for fn in fnList if os.path.splitext(fn)[0] not in targetNameList]
+        fnList = [fn for fn in fnList
+                  if os.path.splitext(fn)[0] not in targetNameList]
     
-    if stripExt == True:
+    if stripExt is True:
         fnList = [os.path.splitext(fn)[0] for fn in fnList]
     
     fnList.sort()
@@ -83,8 +83,8 @@ def openCSV(path, fn, valueIndex=None, encoding="ascii"):
     In many cases we only want a single value from the feature (mainly because
     the feature only contains one value).  In these situations, the user
     can indicate that rather than receiving a list of lists, they can receive
-    a lists of values, where each value represents the item in the row indiciated
-    by valueIndex.
+    a lists of values, where each value represents the item in the row
+    indicated by valueIndex.
     '''
     
     # Load CSV file
@@ -92,7 +92,7 @@ def openCSV(path, fn, valueIndex=None, encoding="ascii"):
         featureList = fd.read().splitlines()
     featureList = [row.split(",") for row in featureList]
     
-    if valueIndex != None:
+    if valueIndex is not None:
         featureList = [row[valueIndex] for row in featureList]
     
     return featureList
@@ -116,7 +116,7 @@ def makeDir(path):
         os.mkdir(path)
 
 
-def extractLines(path, matchStr, outputDir = "output"):
+def extractLines(path, matchStr, outputDir="output"):
     
     outputPath = join(path, outputDir)
     makeDir(outputPath)
@@ -157,7 +157,7 @@ def catAll(path, ext, ensureNewline=False):
 def whatever(path):
     outputList = []
     for fn in findFiles(path, filterExt=".txt"):
-        outputList.extend([fn,]*30)
+        outputList.extend([fn, ] * 30)
         
     for fn in outputList:
         print fn
@@ -174,45 +174,8 @@ def divide(numerator, denominator, zeroValue):
 
 def safeZip(listOfLists, enforceLength):
     
-    if enforceLength == True:
+    if enforceLength is True:
         length = len(listOfLists[0])
         assert(all([length == len(subList) for subList in listOfLists]))
     
     return itertools.izip_longest(*listOfLists)
-
-
-if __name__ == "__main__":
-#     catAll("/Users/tmahrt/Desktop/experiments/Mother_Prosody_RAship/features/manual_speech_rate_dictionary", ".txt", True)
-#     catAll("/Users/tmahrt/Desktop/experiments/Mother_Prosody_RAship/features/praat_f0_measures", ".txt", True)
-    
-    whatever("/Users/tmahrt/Desktop/experiments/Mother_Prosody_RAship/features/praat_f0_measures")
-    
-#     path = "/Users/timmahrt/Sites/tests/prelim_stimuli/audio"
-#     path = "/Users/timmahrt/Desktop/blah99/cleaned"
-#     x = findFiles(path, filterExt=".ogg")
-#     
-#     txt = "\n".join(x)
-#     open(join(path, "names.txt"), "w").write(txt)
-    
-#    # getMatchFunc() unit tests
-#    x = getMatchFunc('#s')
-#    print x('satatonic')
-#    print x('bird')
-#    
-#    y = getMatchFunc('#cat')
-#    print y('catatonic')
-#    
-#    z = getMatchFunc('d#')
-#    print z('birdz')
-#    print z('bird')
-#    
-#    a = getMatchFunc('bird#')
-#    print a('I love big bird')
-#    print a('Do you see the birds')
-#    
-#    b = getMatchFunc('tall')
-#    print b('taller than you')
-#    print b('Smaller than you')
-    
-    
-

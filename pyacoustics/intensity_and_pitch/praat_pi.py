@@ -17,21 +17,6 @@ import praatio
 from pyacoustics.utilities import filters
 from pyacoustics.utilities import utils
 from pyacoustics.utilities import my_math
-
-
-class ApplicationNotFound(Exception):
-    
-    def __init__(self, applicationName):
-        super(ApplicationNotFound, self).__init__()
-        self.applicationName = applicationName
-        
-    def __str__(self):
-        return "Application (%s) does not exist" % self.applicationName
-
-
-def _checkForApplication(application):
-    if not os.path.exists(application):
-        raise ApplicationNotFound(application)
     
 
 def getPraatPitchAndIntensity(inputPath, inputFN, outputPath, praatEXE,

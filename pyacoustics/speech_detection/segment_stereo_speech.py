@@ -4,102 +4,7 @@ Created on Nov 4, 2014
 @author: tmahrt
 '''
 
-import wave
-import struct
-import math
-
-import praatio
-
-from pyacoustics.signals import audio_scripts
-
-
-class EndOfAudioData(Exception):
-    pass
-
-
-def _openAudioFile(fn):
-    audiofile = wave.open(fn, "r")
-    
-    params = audiofile.getparams()
-    nchannels, sampwidth, framerate, nframes, comptype, compname = params
-    
-    return audiofile, sampwidth, framerate
-
-
-def _cropUnusedPortion(entry, start, stop):
-    
-    retEntryList = []
-    
-    if entry[0] < start:
-        retEntryList.append( (entry[0], start) )
-    
-    if entry[1] > stop:
-        retEntryList.append( (stop, entry[1]) )
-    
-    return retEntryList
-
-
-def _mergeAdjacentEntries(entryList):
-    
-    i = 0
-    while i < len(entryList) - 1:
-        
-        if entryList[i][1] == entryList[i+1][0]:
-            startEntry = entryList.pop(i)
-            nextEntry = entryList.pop(i)
-            
-            entryList.insert(i, (startEntry[0], nextEntry[1]))
-        else:
-            i += 1
-            
-    return entryList
-    
-    
-def _rmsNextFrames(audiofile, stepSize, normMinVal=None, normMaxVal=None):
-    
-    params = audiofile.getparams()
-    sampwidth, framerate = params[1], params[2]
-
-    numFrames = int(framerate * stepSize)
-    waveData = audiofile.readframes(numFrames)
-
-    if len(waveData) == 0:
-        raise EndOfAudioData()
-
-    actualNumFrames = int(len(waveData) / float(sampwidth))
-    audioFrameList = struct.unpack("<"+"h"*actualNumFrames, waveData)        
-    
-    rmsEnergy = _rms(audioFrameList)    
-
-    if normMinVal != None and normMaxVal != None:
-        rmsEnergy = (rmsEnergy - normMinVal) / (normMaxVal - normMinVal)
-
-    return rmsEnergy
-
-
-def _rms(audioFrameList):
-    audioFrameList = [val**2 for val in audioFrameList]
-    meanVal = sum(audioFrameList) / len(audioFrameList)
-    return math.sqrt(meanVal)
-
-
-def _overlapCheck(interval, cmprInterval, percentThreshold=0):
-    '''Checks whether two intervals overlap'''
-    
-    startTime, endTime = interval[0], interval[1]
-    cmprStartTime, cmprEndTime = cmprInterval[0], cmprInterval[1]
-    
-    overlapTime = min(endTime, cmprEndTime) - max(startTime, cmprStartTime)
-    overlapTime = max(0, overlapTime)
-    overlapFlag = overlapTime > 0
-    
-    if percentThreshold > 0 and overlapFlag:
-        totalTime = max(endTime, cmprEndTime) - min(startTime, cmprStartTime)
-        percentOverlap = overlapTime / float(totalTime)
-        
-        overlapFlag = percentOverlap >= percentThreshold
-    
-    return overlapFlag
+from pyacoustics.speech_detection import common
 
 
 def findNextSpeaker(leftSamples, rightSamples, samplingFreq,
@@ -116,18 +21,22 @@ def findNextSpeaker(leftSamples, rightSamples, samplingFreq,
 
         # Stop analyzing once we've reached the end of this interval
         currentTime = startTime + i * stepSize
-        nextTime = startTime + ((i+1) * stepSize)
+        nextTime = startTime + ((i + 1) * stepSize)
 
         if nextTime > analyzeStop:
-            raise EndOfAudioData()
+            raise common.EndOfAudioData()
 
-        leftRMSEnergy = _rms(leftSamples[int(currentTime*samplingFreq):
-                                         int(nextTime*samplingFreq)])
-        rightRMSEnergy = _rms(rightSamples[int(currentTime*samplingFreq):
-                                           int(nextTime*samplingFreq)])
+        leftRMSEnergy = common.rms(leftSamples[int(currentTime *
+                                                   samplingFreq):
+                                               int(nextTime *
+                                                   samplingFreq)])
+        rightRMSEnergy = common.rms(rightSamples[int(currentTime *
+                                                     samplingFreq):
+                                                 int(nextTime *
+                                                     samplingFreq)])
         
-        if ((findLeft == True and leftRMSEnergy >= rightRMSEnergy) or
-           (findLeft == False and leftRMSEnergy <= rightRMSEnergy)):
+        if ((findLeft is True and leftRMSEnergy >= rightRMSEnergy) or
+           (findLeft is False and leftRMSEnergy <= rightRMSEnergy)):
             currentSequenceNum += 1
         else:
             currentSequenceNum = 0
@@ -135,11 +44,11 @@ def findNextSpeaker(leftSamples, rightSamples, samplingFreq,
     
     endTime = startTime + (i - numSteps) * stepSize
     
-    return endTime 
+    return endTime
 
 
-def assignAudioEventsForEntries(leftSamples, rightSamples, samplingFreq, 
-                                leftEntry, rightEntry, stepSize, 
+def assignAudioEventsForEntries(leftSamples, rightSamples, samplingFreq,
+                                leftEntry, rightEntry, stepSize,
                                 speakerNumSteps):
     '''
     Start up and tear down function for assignAudioEvents()
@@ -149,8 +58,8 @@ def assignAudioEventsForEntries(leftSamples, rightSamples, samplingFreq,
     start = max(leftEntry[0], rightEntry[0])
     stop = min(leftEntry[1], rightEntry[1])
     
-    leftEntryList = _cropUnusedPortion(leftEntry, start, stop)
-    rightEntryList = _cropUnusedPortion(rightEntry, start, stop)
+    leftEntryList = common.cropUnusedPortion(leftEntry, start, stop)
+    rightEntryList = common.cropUnusedPortion(rightEntry, start, stop)
     
     # Determine who is speaking in overlapped portions
     tmpEntries = assignAudioEvents(leftSamples, rightSamples, samplingFreq,
@@ -163,23 +72,23 @@ def assignAudioEventsForEntries(leftSamples, rightSamples, samplingFreq,
     leftEntryList.sort()
     rightEntryList.sort()
     
-    leftEntryList = _mergeAdjacentEntries(leftEntryList)
-    rightEntryList = _mergeAdjacentEntries(rightEntryList)
+    leftEntryList = common.mergeAdjacentEntries(leftEntryList)
+    rightEntryList = common.mergeAdjacentEntries(rightEntryList)
     
     return leftEntryList, rightEntryList
 
 
-def assignAudioEvents(leftSamples, rightSamples, samplingFreq, startTime, 
+def assignAudioEvents(leftSamples, rightSamples, samplingFreq, startTime,
                       analyzeStop, stepSize, speakerNumSteps):
 
-    findLeft = True    
+    findLeft = True
     leftEntryList = []
     rightEntryList = []
     try:
         while True:
-            endTime = findNextSpeaker(leftSamples, rightSamples, 
-                                      samplingFreq, startTime, 
-                                      analyzeStop, stepSize, 
+            endTime = findNextSpeaker(leftSamples, rightSamples,
+                                      samplingFreq, startTime,
+                                      analyzeStop, stepSize,
                                       speakerNumSteps, findLeft)
             
             if endTime > analyzeStop:
@@ -196,7 +105,7 @@ def assignAudioEvents(leftSamples, rightSamples, samplingFreq, startTime,
             startTime = endTime
             findLeft = not findLeft
         
-    except EndOfAudioData: # Stop processing
+    except common.EndOfAudioData:  # Stop processing
     
         if analyzeStop - startTime > stepSize * speakerNumSteps:
             finalEntry = (startTime, analyzeStop)
@@ -208,38 +117,15 @@ def assignAudioEvents(leftSamples, rightSamples, samplingFreq, startTime,
     return leftEntryList, rightEntryList
 
 
-def getMinMaxAmplitude(wavFN, stepSize, entryList=None):
-    
-    audiofile = _openAudioFile(wavFN)[0]
-    
-    # By default, find the min and max amplitude for the whole file
-    if entryList == None:
-        stop = audio_scripts.getSoundFileDuration(wavFN)
-        entryList = [(0, stop),]
-    
-    # Accumulate relevant energy values
-    rmsList = []
-    for entry in entryList:
-        start, stop = entry[0], entry[1]
-        currentTime = start
-        while currentTime < stop:
-            rmsList.append(_rmsNextFrames(audiofile, stepSize))
-            currentTime += stepSize
-    
-    # Return the min and max values
-    minValue = min(rmsList)
-    maxValue = max(rmsList)
-    
-    return minValue, maxValue
-
-
 def autosegmentStereoAudio(leftSamples, rightSamples, samplingFreq,
                            leftEntryList, rightEntryList,
                            stepSize, speakerNumSteps):
 
-    overlapThreshold = 0    
-    overlapCheck = (lambda entry, entryList: 
-                    [not _overlapCheck(entry, cmprEntry, overlapThreshold) 
+    overlapThreshold = 0
+    overlapCheck = (lambda entry, entryList:
+                    [not common.overlapCheck(entry,
+                                             cmprEntry,
+                                             overlapThreshold)
                      for cmprEntry in entryList]
                     )
     
@@ -263,8 +149,8 @@ def autosegmentStereoAudio(leftSamples, rightSamples, samplingFreq,
     i = 0
     while i < len(leftEntryList):
         
-        # Check if there are any segments in the right channel that overlap 
-        # with the current segment in the left channel.  If not, move to 
+        # Check if there are any segments in the right channel that overlap
+        # with the current segment in the left channel.  If not, move to
         # the next segment.
         leftEntry = leftEntryList[i]
         overlapCheckList = overlapCheck(leftEntry, rightEntryList)
@@ -276,13 +162,13 @@ def autosegmentStereoAudio(leftSamples, rightSamples, samplingFreq,
         # overlaps with the current segment
         leftEntry = leftEntryList.pop(i)
         
-        j = overlapCheckList.index(False) # Find the first overlap
+        j = overlapCheckList.index(False)  # Find the first overlap
         rightEntry = rightEntryList.pop(j)
         
-        entryTuple = assignAudioEventsForEntries(leftSamples, rightSamples, 
+        entryTuple = assignAudioEventsForEntries(leftSamples, rightSamples,
                                                  samplingFreq,
-                                                 leftEntry, rightEntry, stepSize, 
-                                                 speakerNumSteps)
+                                                 leftEntry, rightEntry,
+                                                 stepSize, speakerNumSteps)
         tmpLeftEntryList, tmpRightEntryList = entryTuple
         
         leftEntryList[i:i] = tmpLeftEntryList
@@ -295,14 +181,9 @@ def autosegmentStereoAudio(leftSamples, rightSamples, samplingFreq,
     newLeftEntryList.sort()
     newRightEntryList.sort()
     
-    newLeftEntryList = [entry for entry in newLeftEntryList 
-                        if (entry[1]-entry[0] > stepSize*speakerNumSteps)]
-    newRightEntryList = [entry for entry in newRightEntryList 
-                         if (entry[1]-entry[0] > stepSize*speakerNumSteps)]
+    newLeftEntryList = [entry for entry in newLeftEntryList
+                        if (entry[1] - entry[0] > stepSize * speakerNumSteps)]
+    newRightEntryList = [entry for entry in newRightEntryList
+                         if (entry[1] - entry[0] > stepSize * speakerNumSteps)]
     
     return newLeftEntryList, newRightEntryList
-    
-
-
-
-

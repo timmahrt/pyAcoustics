@@ -3,7 +3,7 @@ Created on Nov 5, 2014
 
 @author: tmahrt
 
-Textgrid utilities for saving the output of speech detection code into 
+Textgrid utilities for saving the output of speech detection code into
 praat textgrids.
 '''
 
@@ -18,10 +18,9 @@ def outputTextgrid(outputFN, duration, entryList, tierName):
                     for i, entry in enumerate(entryList)]
     
     # Output textgrid
-    tierSpeech = praatio.TextgridTier(tierName, newEntryList, 
-                                      praatio.INTERVAL_TIER, 0, duration)
+    tierSpeech = praatio.IntervalTier(tierName, newEntryList, 0, duration)
 
-    tg = praatio.Textgrid()    
+    tg = praatio.Textgrid()
     tg.addTier(tierSpeech)
     tg.save(outputFN)
 
@@ -31,28 +30,27 @@ def outputStereoTextgrid(outputFN, duration, leftEntryList, rightEntryList,
 
     # Give all entries a label indicating their order of occurrence
     leftEntryList.sort()
-    newLeftEntryList = [(entry[0], entry[1], str(i)) 
+    newLeftEntryList = [(entry[0], entry[1], str(i))
                         for i, entry in enumerate(leftEntryList)]
 
     rightEntryList.sort()
-    newRightEntryList = [(entry[0], entry[1], str(i)) 
+    newRightEntryList = [(entry[0], entry[1], str(i))
                          for i, entry in enumerate(rightEntryList)]
     
     # This shouldn't be necessary
-    newLeftEntryList = [entry for entry in newLeftEntryList 
-                        if entry[1] <= duration and entry[0] < entry[1]]    
-    newRightEntryList = [entry for entry in newRightEntryList 
+    newLeftEntryList = [entry for entry in newLeftEntryList
+                        if entry[1] <= duration and entry[0] < entry[1]]
+    newRightEntryList = [entry for entry in newRightEntryList
                          if entry[1] <= duration and entry[0] < entry[1]]
     
     # Output textgrid
-    leftTier = praatio.TextgridTier(leftChannelName, newLeftEntryList, 
-                                    praatio.INTERVAL_TIER, 0, duration)
-    rightTier = praatio.TextgridTier(rightChannelName, newRightEntryList, 
-                                     praatio.INTERVAL_TIER, 0, duration)
+    leftTier = praatio.IntervalTier(leftChannelName, newLeftEntryList,
+                                    0, duration)
+    rightTier = praatio.IntervalTier(rightChannelName, newRightEntryList,
+                                     0, duration)
     
     outputTG = praatio.Textgrid()
     outputTG.addTier(leftTier)
     outputTG.addTier(rightTier)
     
     outputTG.save(outputFN)
-

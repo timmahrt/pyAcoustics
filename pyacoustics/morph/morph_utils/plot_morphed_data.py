@@ -153,7 +153,7 @@ def plotIntensity(fromDataList, toDataList, mergeTupleList,
         hexValue = "#%02x0000" % int(255 - colorValue)
         xValues = [i for i in xrange(len(valueList))]
         if colorValue == 255.0:
-            plot3 = ax0.plot(xValues, valueList, color=hexValue, linewidth=1, 
+            plot3 = ax0.plot(xValues, valueList, color=hexValue, linewidth=1,
                              label="Merged line")
         else:
             plot3 = ax0.plot(xValues, valueList, color=hexValue, linewidth=1)

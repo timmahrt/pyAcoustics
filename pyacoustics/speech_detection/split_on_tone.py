@@ -21,7 +21,6 @@ def _homogenizeList(dataList):
     '''
     
     minVal = min(dataList)
-    maxVal = max(dataList)
     
     retDataList = []
     for val in dataList:
@@ -44,7 +43,6 @@ def splitFileOnTone(path, fn, pitchList, pitchSampleFreq, createSubwavs=False,
     fileDuration = audio_scripts.getSoundFileDuration(join(path, fn))
     
     roundedPitchList = [round(val, -1) for val in pitchList]
-    maxPitch = max(roundedPitchList)
     open(join(path, "rounded_pitch_list.txt"),
          "w").write("\n".join([str(val) for val in roundedPitchList]))
     roundedPitchList = _homogenizeList(roundedPitchList)

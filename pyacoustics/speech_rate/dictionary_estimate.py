@@ -51,8 +51,9 @@ def manualPhoneCount(tgInfoPath, isleFN, outputPath, skipList=None):
         print fn
         
         dataList = utils.openCSV(tgInfoPath, fn)
+        dataList = [row[2] for row in dataList]  # start, stop, tmpLabel
         outputList = []
-        for start, stop, tmpLabel in dataList:
+        for tmpLabel in dataList:
             if tmpLabel not in skipList:
                 syllableCount, phoneCount = isletool.getNumPhones(isleDict,
                                                                   tmpLabel,
@@ -81,8 +82,8 @@ def manualPhoneCountForEpochs(manualCountsPath, tgInfoPath, epochPath,
         manualCounts = utils.openCSV(manualCountsPath, fn)
         
         epochOutputList = []
-        for epochNumber, epochStart, epochStop in epochList:
-            epochStart, epochStop = float(epochStart), float(epochStop)
+        for epochTuple in epochList:  # Epoch num, start, stop
+            epochStart, epochStop = float(epochTuple[1]), float(epochTuple[2])
             
             # Find all of the intervals that are at least partially
             # contained within the current epoch
@@ -91,11 +92,8 @@ def manualPhoneCountForEpochs(manualCountsPath, tgInfoPath, epochPath,
             speechDuration = 0
             for info, counts in utils.safeZip([tgInfo, manualCounts],
                                               enforceLength=True):
-                start, stop, wordList = info
-                start, stop = float(start), float(stop)
-                
-                syllableCount, phoneCount = counts
-                syllableCount, phoneCount = float(syllableCount), float(phoneCount)
+                start, stop = float(info[0]), float(info[1])
+                syllableCount, phoneCount = float(counts[0]), float(counts[1])
             
                 # Accounts for intervals that straddle an epoch boundary
                 multiplicationFactor = percentInside(start, stop,
@@ -111,7 +109,3 @@ def manualPhoneCountForEpochs(manualCountsPath, tgInfoPath, epochPath,
                                                  speechDuration))
         
         open(join(outputPath, fn), "w").write("\n".join(epochOutputList))
-
-
-
-

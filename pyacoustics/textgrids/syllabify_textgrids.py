@@ -18,7 +18,7 @@ from pyacoustics.utilities import utils
 def correctTextgridTimes(tgPath, threshold):
     
     # Are x and y unique but very very similar
-    withinThreshold = lambda x, y: (abs(x - y) < threshold) and (x != y) 
+    withinThreshold = lambda x, y: (abs(x - y) < threshold) and (x != y)
     
     outputPath = join(tgPath, "correctsTGs")
     utils.makeDir(outputPath)
@@ -51,8 +51,7 @@ def correctTextgridTimes(tgPath, threshold):
                     phoneTier.entryList[i] = (start, end, phone)
         
         tg.save(join(outputPath, fn))
-            
-        
+
 
 def syllabifyTextgrids(tgPath, islePath):
 
@@ -60,6 +59,7 @@ def syllabifyTextgrids(tgPath, islePath):
 
     outputPath = join(tgPath, "syllabifiedTGs")
     utils.makeDir(outputPath)
+    skipLabelList = ["<VOCNOISE>", "xx", "<SIL>", "{B_TRANS}", '{E_TRANS}']
 
     for fn in utils.findFiles(tgPath, filterExt=".TextGrid"):
 
@@ -67,11 +67,10 @@ def syllabifyTextgrids(tgPath, islePath):
             continue
 
         tg = praatio.openTextGrid(join(tgPath, fn))
-
-        syllableTG = praattools.syllabifyTextgrid(isleDict, tg, "words", "phones", 
-                                                  skipLabelList=["<VOCNOISE>", "xx",
-                                                                 "<SIL>", "{B_TRANS}",
-                                                                 '{E_TRANS}'])
+        
+        syllableTG = praattools.syllabifyTextgrid(isleDict, tg, "words",
+                                                  "phones",
+                                                  skipLabelList=skipLabelList)
         
         outputTG = praatio.Textgrid()
         outputTG.addTier(tg.tierDict["words"])
@@ -82,11 +81,9 @@ def syllabifyTextgrids(tgPath, islePath):
         outputTG.save(join(outputPath, fn))
 
 if __name__ == "__main__":
-    tgPath = "/Users/tmahrt/Desktop/experiments/LMEDS_studies/RPT_English/features/tobi_textgrids"
-    islePath = "/Users/tmahrt/Dropbox/workspace/pysle/test/islev2.txt"
+    tmpISLEPath = "/Users/tmahrt/Dropbox/workspace/pysle/test/islev2.txt"
 #     correctTextgridTimes(tgPath, 0.0025)
 
-    tgPath = "/Users/tmahrt/Desktop/experiments/LMEDS_studies/RPT_English/features/tobi_textgrids/correctsTGs"
-    syllabifyTextgrids(tgPath, islePath)
-    
-    
+    tmpTGPath = join("/Users/tmahrt/Desktop/experiments/LMEDS_studies",
+                     "RPT_English/features/tobi_textgrids/correctsTGs")
+    syllabifyTextgrids(tmpTGPath, tmpISLEPath)
