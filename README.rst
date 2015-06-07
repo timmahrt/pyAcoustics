@@ -3,7 +3,7 @@
 pyAcoustics
 ---------
 
-A collection of scripts for extracting and analyzing acoustics from audio files.
+A collection of python scripts for extracting and analyzing acoustics from audio files.
 
 
 Common Use Cases
@@ -42,13 +42,18 @@ Requirements
 Many of the individual features require different packages.  If you aren't using those
 packages then you don't need to install the dependencies.
 
-pyacoustics.intensity_and_pitch.praat_pi requires `praat <http://www.fon.hum.uva.nl/praat/>`_
+pyacoustics.intensity_and_pitch.praat_pi requires 
+`praat <http://www.fon.hum.uva.nl/praat/>`_
 
 pyacoustics.intensity_and_pitch.get_f0 requires the ESPS getF0 function as implemented 
 by `Snack <http://www.speech.kth.se/snack/>`_ although I recall having difficulty 
 installing it.
 
-My praatIO library is used extensively and can be downloaded `here <https://github.com/timmahrt/praatIO>`_
+pyacoustics.speech_rate/dictionary_estimate.py requires my library 
+`psyle <https://github.com/timmahrt/pysle>`_
+
+My praatIO library is used extensively and can be downloaded 
+`here <https://github.com/timmahrt/praatIO>`_
 
 
 Installation
