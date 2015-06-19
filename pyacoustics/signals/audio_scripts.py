@@ -164,7 +164,9 @@ def splitStereoAudio(path, fn, outputPath=None):
     
     if outputPath is None:
         outputPath = join(path, "split_audio")
-    utils.makeDir(outputPath)
+
+    if not os.path.exists(outputPath):
+        os.mkdir(outputPath)
     
     name = os.path.splitext(fn)[0]
     
@@ -172,8 +174,23 @@ def splitStereoAudio(path, fn, outputPath=None):
     leftOutputFN = join(outputPath, "%s_L.wav" % name)
     rightOutputFN = join(outputPath, "%s_R.wav" % name)
     
-    reduceToSingleChannel(fnFullPath, leftOutputFN, 1, 0)
-    reduceToSingleChannel(fnFullPath, rightOutputFN, 0, 1)
+    audiofile = wave.open(fnFullPath, "r")
+
+    params = audiofile.getparams()
+    sampwidth = params[1]
+    nframes = params[3]
+    audioFrames = audiofile.readframes(nframes)
+    
+    for leftFactor, rightFactor, outputFN in ((1, 0, leftOutputFN),
+                                              (0, 1, rightOutputFN)):
+        
+        monoAudioFrames = audioop.tomono(audioFrames, sampwidth,
+                                         leftFactor, rightFactor)
+        params = tuple([1, ] + list(params[1:]))
+        
+        outputAudiofile = wave.open(outputFN, "w")
+        outputAudiofile.setparams(params)
+        outputAudiofile.writeframes(monoAudioFrames)
 
 
 def getSubwav(fn, startT, endT, singleChannelFlag):
