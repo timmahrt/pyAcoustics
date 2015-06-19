@@ -160,7 +160,7 @@ def whatever(path):
         outputList.extend([fn, ] * 30)
         
     for fn in outputList:
-        print fn
+        print(fn)
 
 
 def divide(numerator, denominator, zeroValue):

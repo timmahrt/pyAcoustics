@@ -88,7 +88,7 @@ def plotF0(fromTuple, toTuple, mergeTupleList, fnFullPath):
     for valueList, timeList in mergeTupleList:
         colorValue += colorStep
         hexValue = "#%02x0000" % int(255 - colorValue)
-        print colorValue, int(colorValue) == 255
+        print("%f, %s" % (colorValue, int(colorValue) == 255))
         if int(colorValue) == 255:
             ax0.plot(timeList, valueList, color=hexValue, linewidth=1,
                      label="Merged line, final iteration")
@@ -120,8 +120,8 @@ def plotIntensity(fromDataList, toDataList, mergeTupleList,
     fromDataList = mag2DB(fromDataList)
     toDataList = mag2DB(toDataList)
     
-    print max(fromDataList)
-    print max(toDataList)
+    print(max(fromDataList))
+    print(max(toDataList))
     
     pylab.hold(True)
     
@@ -147,7 +147,7 @@ def plotIntensity(fromDataList, toDataList, mergeTupleList,
         
         valueList = mag2DB(valueList)
         
-        print max(valueList)
+        print(max(valueList))
         
         colorValue += colorStep
         hexValue = "#%02x0000" % int(255 - colorValue)

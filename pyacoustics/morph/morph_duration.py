@@ -85,7 +85,7 @@ def _psolaDuration(ratioTupleList, fromWavDuration, timeDiff, path, fromFN,
     open(scriptFNFullPath, "w").write(durationScript)
     
     # Run the script
-    print "praat %s" % scriptFNFullPath
+    print("praat %s" % scriptFNFullPath)
     common.runPraatScript(praatExe, scriptFNFullPath)
     
 
@@ -180,7 +180,7 @@ def durationMorph(path, fromFN, toFN, numSteps, tierName,
     open(scriptFNFullPath, "w").write(durationScript)
     
     # Run the script
-    print "praat %s" % scriptFNFullPath
+    print("praat %s" % scriptFNFullPath)
     common.runPraatScript(praatExe, scriptFNFullPath)
     
     # Create the adjusted textgrids

@@ -154,13 +154,13 @@ def sampleRight(dataList, i, chunkSize):
     end = i + 1 if i < len(dataList) else len(dataList)
     
     # Handling underflow
-#     print "blah", abs(i - chunkSize), start, end
+#     print("blah", abs(i - chunkSize), start, end)
     if i - chunkSize < 0:
         subList += [dataList[0], ] * (abs(i - chunkSize + 1))
         indexList += [0, ] * (abs(i - chunkSize + 1))
     
     # The normal range
-#     print start, end
+#     print(start, end)
     mainBody = [dataList[j] for j in range(start, end)]
     uniqueChunkLen = len(mainBody)
     subList.extend(mainBody)

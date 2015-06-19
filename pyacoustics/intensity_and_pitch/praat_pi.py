@@ -78,7 +78,7 @@ def loadPitchAndTime(rawPitchDir, fn):
     try:
         data = open(join(rawPitchDir, fn), "rU").read()
     except IOError:
-        print "No pitch track for: %s" % name
+        print("No pitch track for: %s" % name)
         raise
         
     dataList = data.splitlines()
@@ -153,7 +153,7 @@ def extractRMSIntensity(intensityAndPitchPath, textgridPath, tierName,
         tg = praatio.openTextGrid(join(textgridPath, name + ".TextGrid"))
         tier = tg.tierDict[tierName]
         
-        print fn
+        print(fn)
         
         rmsIntensityList = []
         for valueList, label, _, _ in getValuesForIntervals(dataList,
@@ -167,7 +167,7 @@ def extractRMSIntensity(intensityAndPitchPath, textgridPath, tierName,
             label = label.strip()
             if label == "" or label == nullLabel:
                 continue
-            print label
+            print(label)
             
             rmsIntensity = 0
             if len(intensityVals) != 0:
@@ -184,8 +184,10 @@ def getValuesForIntervals(dataList, entryList):
         
         subDataList = getAllValuesInTime(start, stop, dataList)
         if subDataList == []:
-            print "No f0 or intensity data for interval"
-            print subDataList, label, start, stop
+            print("No f0 or intensity data for interval")
+            print("%s, %s, %f, %f" %
+                  (",".join(subDataList), label, start, stop))
+        
         yield subDataList, label, start, stop
         
         
@@ -211,8 +213,8 @@ def extractPitchMeasuresForSegment(f0Values, name, label,
         f0Values = [f0Val for f0Val in f0Values if int(f0Val) != 0]
     
     if len(f0Values) == 0:
-        myStr = u"No data for file: %s, label: %s" % (name, label)
-        print myStr.encode('ascii', 'replace')
+        myStr = u"No pitch data for file: %s, label: %s" % (name, label)
+        print(myStr.encode('ascii', 'replace'))
         counts = 0
         meanF0 = 0
         maxF0 = 0

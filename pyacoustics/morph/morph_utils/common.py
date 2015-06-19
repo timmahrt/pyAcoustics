@@ -39,5 +39,5 @@ def loadPraatTemplate(fn, praatDirectory=None):
 
 def runPraatScript(praatExe, scriptPath):
     
-    print "%s %s" % (praatExe, scriptPath)
+    print("%s %s" % (praatExe, scriptPath))
     subprocess.call([praatExe, scriptPath])

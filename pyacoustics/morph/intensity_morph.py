@@ -97,7 +97,7 @@ def _intensityMorph(fromWavFN, toWavFN, fromDataTupleList,
         if len(expandedNormFactorList) == (expectedLength - 1):
             expandedNormFactorList.append(expandedNormFactorList[-1])
 
-#         print "Diff: ", expectedLength, len(expandedNormFactorList)
+#         print("Diff: ", expectedLength, len(expandedNormFactorList))
         assert(expectedLength == len(expandedNormFactorList))
         
         newWavObj = copy.deepcopy(fromWavObj)
@@ -161,7 +161,7 @@ def getNormalizationFactor(lst, refLst=None):
         refMinV = float(min(refLst))
     
     actualFactor = min(refMaxV / actMaxV, abs(refMinV) / abs(actMinV))
-#     print "Normalization factor: ", actualFactor
+#     print("Normalization factor: ", actualFactor)
     
     return actualFactor
 
@@ -205,9 +205,9 @@ def getRelativeNormalizedFactors(fromDataList, toDataList, chunkSize):
         normFactorList.append((normFactor, distToNextControlPoint))
 #         i += 1
 #         if i >= 38:
-#             print "hello"
+#             print("hello")
     
-#     print len(sourceWav.rawDataList), allChunks
+#     print(len(sourceWav.rawDataList), allChunks)
 #     assert(len(sourceWav.rawDataList) == allChunks)
     return normFactorList, newTargetRawDataList
 
@@ -241,5 +241,5 @@ def expandNormalizationFactors(normFactorList):
                                           finalChunkSize - 1))
     normFactorsFull.extend(my_math.linspace(value, value, finalChunkSize))
     
-    print 'Norm factors full', len(normFactorsFull)
+    print('Norm factors full: %d' % len(normFactorsFull))
     return normFactorsFull, controlPoints

@@ -154,7 +154,7 @@ def f0Morph(path, fromFN, toFN, numSteps, tierName, doPlotPitchSteps,
     for i in xrange(0, len(finalOutputList)):
         outputPitchList = finalOutputList[i]
         outputFN = "%s_%d.PitchTier" % (toName, i)
-        print outputFN, len(finalOutputList)
+        print("%s, %d" % (outputFN, len(finalOutputList)))
         savePitchData(outputPitchList, str(0), fromDuration,
                       stepPitchTierPath, outputFN)
         

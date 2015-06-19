@@ -30,7 +30,7 @@ def findNextEvent(fn, startTime, silenceThreshold, stepSize,
         audioFrameList = struct.unpack("<" + "h" * actualNumFrames, waveData)
         
         rmsEnergy = common.rms(audioFrameList)
-        print rmsEnergy
+        print(rmsEnergy)
         
         if ((findSilence is True and rmsEnergy < silenceThreshold) or
            (findSilence is False and rmsEnergy > silenceThreshold)):

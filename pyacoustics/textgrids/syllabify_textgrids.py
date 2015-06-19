@@ -24,7 +24,7 @@ def correctTextgridTimes(tgPath, threshold):
     utils.makeDir(outputPath)
     
     for fn in utils.findFiles(tgPath, filterExt=".TextGrid"):
-        print fn
+        print(fn)
         tg = praatio.openTextGrid(join(tgPath, fn))
         wordTier = tg.tierDict["words"]
         phoneTier = tg.tierDict["phones"]

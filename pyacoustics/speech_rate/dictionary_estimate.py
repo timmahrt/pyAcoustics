@@ -48,7 +48,7 @@ def manualPhoneCount(tgInfoPath, isleFN, outputPath, skipList=None):
 
         if os.path.exists(join(outputPath, fn)):
             continue
-        print fn
+        print(fn)
         
         dataList = utils.openCSV(tgInfoPath, fn)
         dataList = [row[2] for row in dataList]  # start, stop, tmpLabel

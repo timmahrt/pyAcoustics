@@ -33,7 +33,7 @@ class CountCorpus(object):
             if outOfDictionaryValue == None:
                 raise
             else:
-                print "OOD Word: ", word
+                print("OOD Word: %s" % word)
                 count = outOfDictionaryValue
         
         if normFunc == None:

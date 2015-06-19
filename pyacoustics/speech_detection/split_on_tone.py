@@ -53,7 +53,7 @@ def splitFileOnTone(path, fn, pitchList, pitchSampleFreq, createSubwavs=False,
                                                  eventDurationThreshold)
     
     for blah in compressedList:
-        print blah
+        print(blah)
     
     tg = praatio.Textgrid()
     for label, entryList in timeDict.items():

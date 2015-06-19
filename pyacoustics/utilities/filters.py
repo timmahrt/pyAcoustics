@@ -44,10 +44,8 @@ def medianFilter(dist, window, useEdgePadding):
                 
             dataToFilter = preContext + currentContext + postContext
             value = _median(dataToFilter)
-#            print currentContext[0], value, dataToFilter
         else:
             value = dist[x]
-#        print value
         returnList.append(value)
         
     return returnList
@@ -66,10 +64,3 @@ def _median(valList):
         medianVal = valList[i]
         
     return medianVal
-
-
-if __name__ == "__main__":
-
-    print _median([1, 5, 2, 4, 3])
-    print _median([1, 1, 1, 2, 3, 3, 3])
-    print _median([1, 1, 1, 1, 2, 2, 2, 2])

@@ -27,7 +27,7 @@ def _findNextEvent(sampleList, startTime, silenceThreshold, sampleFreq,
             raise common.EndOfAudioData()
         
         rmsEnergy = common.rms(audioFrameList)
-        print rmsEnergy
+        print(rmsEnergy)
         
         if ((findSilence is True and rmsEnergy < silenceThreshold) or
            (findSilence is False and rmsEnergy > silenceThreshold)):

@@ -103,7 +103,7 @@ def assignAudioEvents(leftFN, rightFN, startTime, analyzeStop, stepSize,
                 else:
                     rightEntryList.append(entry)
             
-            print startTime, endTime, analyzeStop
+            print("%f, %f, %f" % (startTime, endTime, analyzeStop))
             startTime = endTime
             findLeft = not findLeft
         

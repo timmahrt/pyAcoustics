@@ -40,7 +40,7 @@ def extractTGInfo(inputPath, outputPath, tierName):
 
         if os.path.exists(join(outputPath, name + ".txt")):
             continue
-        print name
+        print(name)
     
         outputList = []
         for start, stop, label in _navigateTGs(inputPath, name, tierName):
