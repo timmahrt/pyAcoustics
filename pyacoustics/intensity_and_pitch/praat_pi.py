@@ -18,11 +18,11 @@ import praatio
 from pyacoustics.utilities import filters
 from pyacoustics.utilities import utils
 from pyacoustics.utilities import my_math
-    
 
-def getPraatPitchAndIntensity(inputPath, inputFN, outputPath, praatEXE,
-                              praatScriptPath, minPitch, maxPitch,
-                              sampleStep=0.01, forceRegenerate=True):
+
+def getPitch(inputPath, inputFN, outputPath, praatEXE,
+             praatScriptPath, minPitch, maxPitch,
+             sampleStep=0.01, forceRegenerate=True):
     '''
     
     
@@ -136,8 +136,8 @@ def extractPraatPitch(intensityAndPitchPath, textgridPath, tierName,
             label = label.strip()
             if label == "" or label == nullLabel:
                 continue
-            pitchData.append(extractPitchMeasuresForSegment(f0Values, name,
-                                                            label, True, True))
+            pitchData.append(getPitchMeasures(f0Values, name,
+                                              label, True, True))
         
         open(join(outputPath, "%s.txt" % name),
              "w").write("\n".join(pitchData))
@@ -174,7 +174,6 @@ def extractRMSIntensity(intensityAndPitchPath, textgridPath, tierName,
             label = label.strip()
             if label == "" or label == nullLabel:
                 continue
-            print(label)
             
             rmsIntensity = 0
             if len(intensityVals) != 0:
@@ -208,9 +207,9 @@ def getAllValuesInTime(startTime, stopTime, dataTuple):
     return returnTuple
 
 
-def extractPitchMeasuresForSegment(f0Values, name, label,
-                                   medianFilterWindowSize=None,
-                                   filterZeroFlag=False):
+def getPitchMeasures(f0Values, name, label,
+                     medianFilterWindowSize=None,
+                     filterZeroFlag=False):
     
     if medianFilterWindowSize is not None:
         f0Values = filters.medianFilter(f0Values, medianFilterWindowSize,
