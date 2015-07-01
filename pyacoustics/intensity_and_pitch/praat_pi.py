@@ -9,6 +9,7 @@ To be used in conjunction with get_pitch_and_intensity.praat
 
 import os
 from os.path import join
+import sys
 import subprocess
 import math
 
@@ -37,6 +38,12 @@ def getPraatPitchAndIntensity(inputPath, inputFN, outputPath, praatEXE,
     
     firstTime = not os.path.exists(join(outputPath, outputFN))
     if firstTime or forceRegenerate is True:
+        
+        # Warn user that this will likely not work if they are using windows
+        if sys.platform.startswith('win'):  # Using windows
+            if "praatcon.exe" not in praatEXE:
+                print("Variable /praatEXE/ needs to point to praatcon.exe"
+                      "on Windows, not praat.exe")
         
         # The praat script uses append mode, so we need to clear any prior
         # result
