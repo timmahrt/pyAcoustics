@@ -8,14 +8,15 @@ import os
 from os.path import join
 import math
 
-import praatio
-
 from pyacoustics.signals import audio_scripts
 from pyacoustics.utilities import sequences
-from pyacoustics.utilities import utils
+
+BEEP = "beep"
+SILENCE = "silence"
+SPEECH = "speech"
 
 
-def _homogenizeList(dataList):
+def _homogenizeList(dataList, toneFrequency):
     '''
     Discritizes pitch values into one of three categories
     '''
@@ -24,71 +25,59 @@ def _homogenizeList(dataList):
     
     retDataList = []
     for val in dataList:
-        if val > 300:
-            val = 'beep'
+        if val == toneFrequency:
+            val = BEEP
         elif val == minVal:
-            val = 'silence'
+            val = SILENCE
         else:
-            val = 'text'
+            val = SPEECH
         retDataList.append(val)
         
     return retDataList
 
 
-def splitFileOnTone(path, fn, pitchList, pitchSampleFreq, createSubwavs=False,
-                    eventDurationThreshold=0.2):
+def splitFileOnTone(pitchList, pitchSampleFreq, toneFrequency,
+                    eventDurationThreshold):
     '''
-    Finds pure
+    Splits files by pure tones
     '''
-    fileDuration = audio_scripts.getSoundFileDuration(join(path, fn))
+    toneFrequency = int(round(toneFrequency, -1))
     
-    roundedPitchList = [round(val, -1) for val in pitchList]
-    open(join(path, "rounded_pitch_list.txt"),
-         "w").write("\n".join([str(val) for val in roundedPitchList]))
-    roundedPitchList = _homogenizeList(roundedPitchList)
+    roundedPitchList = [int(round(val, -1)) for val in pitchList]
+    codedPitchList = _homogenizeList(roundedPitchList, toneFrequency)
     
-    compressedList = sequences.compressList(roundedPitchList)
+    compressedList = sequences.compressList(codedPitchList)
     timeDict = sequences.compressedListTransform(compressedList,
-                                                 pitchSampleFreq,
+                                                 1 / float(pitchSampleFreq),
                                                  eventDurationThreshold)
     
-    for blah in compressedList:
-        print(blah)
-    
-    tg = praatio.Textgrid()
-    for label, entryList in timeDict.items():
-        
-        entryList.sort()
-        
-        tier = praatio.IntervalTier(label, entryList, 0, fileDuration)
-        tg.addTier(tier)
-    
-    tgFN = os.path.splitext(fn)[0] + ".TextGrid"
-    tg.save(join(path, tgFN))
-    
-    if createSubwavs:
-        extractSubwavs(path, fn, tgFN)
+    # Fill in with empty lists if it didn't appear in the dataset
+    # (eg no beeps were detected or no speech occurred)
+    for key in [BEEP, SPEECH, SILENCE]:
+        if key not in timeDict:
+            timeDict[key] = []
+
+    return timeDict
     
 
-def extractSubwavs(path, fn, tgFN):
+def extractSubwavs(timeDict, path, fn, outputPath):
     '''
-    Extracts segments marked in the output of splitFileOnTone()
+    Extracts segments between tones marked in the output of splitFileOnTone()
     '''
-
-    outputPath = join(path, "extractedWavs")
-    utils.makeDir(outputPath)
-
-    tg = praatio.openTextGrid(join(path, tgFN))
-    tier = tg.tierDict["beep"]
-    
     name = os.path.splitext(fn)[0]
-    entryList = [entry for entry in praatio.fillInBlanks(tier.entryList, "")
-                 if entry[2] == ""]
     
-    numZeroes = int(math.floor(math.log10(len(entryList)))) + 1
+    duration = audio_scripts.getSoundFileDuration(join(path, fn))
+    beepEntryList = timeDict[BEEP]
+    segmentEntryList = sequences.invertIntervalList(beepEntryList, 0, duration)
+    
+    if len(segmentEntryList) > 0:
+        numZeroes = int(math.floor(math.log10(len(segmentEntryList)))) + 1
+    else:
+        numZeroes = 1
+        
     strFmt = "%%s_%%0%dd.wav" % numZeroes  # e.g. '%s_%02d.wav'
 
-    for i, entry in enumerate(entryList):
+    for i, entry in enumerate(segmentEntryList):
         start, stop = entry[:2]
         
         audio_scripts.extractSubwav(join(path, fn),
