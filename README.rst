@@ -72,5 +72,25 @@ If python is not in your path, you'll need to enter the full path e.g.::
 Example usage
 ================
 
-TODO
+See the example folders for a few real-world examples using this library.
+
+- examples/split_audio_on_silence.py
+
+    Detects the presence of speech in a recording based on acoustic 
+    intensity.  Everything louder than some threshold specified by
+    the user is considered speech.
+    
+- examples/split_audio_on_tone.py
+
+    Detects the presence of pure tones in a recording.  One can use
+    this to automatically segment stimuli.  Beeps can be played while
+    the speech is being recorded and then later this tool can
+    automatically segment the speech, based on the presence of those
+    tones.
+    
+    Also detects speech using a pitch analysis.  Most syllables
+    contain some voicing, so a stream of modulating pitch values
+    suggests that someone is speaking.  This aspect is not extensively
+    tested but it works well for the example files.
+
 
