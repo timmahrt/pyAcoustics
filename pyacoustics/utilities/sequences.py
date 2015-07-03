@@ -298,3 +298,30 @@ def findLongestSublist(listOfLists):
             longestList = lst
 
     return i, longestList
+
+
+def invertIntervalList(entryList, minValue=0, maxValue=None):
+    '''
+    Given a list of ordinal events, inverts the start and end positions
+    
+    e.g. input [(5, 6), (10, 13), (14, 16)]
+         output [(0, 5), (6, 10), (13, 14)]
+    '''
+    newEntryList = []
+    i = 0
+    
+    # Add possible initial interval
+    if minValue is not None:
+        if entryList[0][0] > minValue:
+            newEntryList.append((minValue, entryList[0][0]))
+    
+    while i + 1 < len(entryList):
+        newEntryList.append((entryList[i][1], entryList[i + 1][0]))
+        i += 1
+        
+    # Add possible trailing interval
+    if maxValue is not None:
+        if entryList[i][1] < maxValue:
+            newEntryList.append((entryList[i][1], maxValue))
+            
+    return newEntryList
