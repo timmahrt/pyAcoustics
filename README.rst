@@ -52,6 +52,11 @@ installing it.
 pyacoustics.speech_rate/dictionary_estimate.py requires my library 
 `psyle <https://github.com/timmahrt/pysle>`_
 
+pyacoustics.signals.data_fitting.py requires
+`SciPy <http://www.scipy.org/>`_
+`NumPy <http://www.numpy.org/>`_
+`scikit-learn <http://scikit-learn.org/>`_
+
 My praatIO library is used extensively and can be downloaded 
 `here <https://github.com/timmahrt/praatIO>`_
 
