@@ -8,6 +8,7 @@ now = datetime.datetime.now
 from pyacoustics.intensity_and_pitch import praat_pi
 from pyacoustics.speech_detection import naive_vad
 from pyacoustics.signals import audio_scripts
+from pyacoustics.signals import data_fitting
 from pyacoustics.utilities import utils
 from pyacoustics.utilities import my_math
 
@@ -15,7 +16,7 @@ import praatio
 
 
 def audiosplitSilence(inputPath, fn, tgPath, pitchPath, subwavPath,
-                      minPitch, maxPitch, intensityPercentile,
+                      minPitch, maxPitch,
                       stepSize, numSteps,
                       praatEXE, praatScriptPath,
                       generateWavs=False,
@@ -62,8 +63,19 @@ def audiosplitSilence(inputPath, fn, tgPath, pitchPath, subwavPath,
 
     # entry = (time, pitchVal, intVal)
     motherPIList = [float(entry[2]) for entry in motherPIList]
-    silenceThreshold = naive_vad.getIntensityPercentile(motherPIList,
-                                                        intensityPercentile)
+    
+    # We need the intensity threshold to distinguish silence from speech/noise
+    # Naively, we can extract this by getting the nth percent most intense
+    # sound in the file naive_vad.getIntensityPercentile()
+    # (but then, how do we determine the percent?)
+    # Alternatively, we could consider the set of intensity values to be
+    # bimodal -- silent values vs non-silent.  The best threshold is the one
+    # that minimizes the overlap between the two distributions, obtained via
+    # data_fitting.getBimodalValley()
+#     silenceThreshold = naive_vad.getIntensityPercentile(motherPIList,
+#                                                         intensityPercentile)
+    silenceThreshold = data_fitting.getBimodalValley(motherPIList, doplot=False)
+    print silenceThreshold
     entryList = naive_vad.naiveVAD(motherPIList, silenceThreshold,
                                    piSamplingRate, stepSize, numSteps)
     entryList = [(time[0], time[1], str(i))
@@ -122,7 +134,7 @@ if __name__ == "__main__":
     _rootFolderName = os.path.splitext(os.path.split(_fn)[1])[0]
     _subwavOutputPath = join(_wavOutputPath, _rootFolderName)
     audiosplitSilence(_dataPath, _fn, _tgPath, _pitchPath, _subwavOutputPath,
-                      _minPitch, _maxPitch, _intensityPercentile,
+                      _minPitch, _maxPitch,
                       _stepSize, _numSteps, _praatEXE, _praatScriptPath)
     
     # Changing the parameters used in silence detection can lead to
@@ -131,5 +143,5 @@ if __name__ == "__main__":
     _numSteps = 10
     _tgPath = join(_dataPath, "splitAudio_silence_stepSize_0.025")
     audiosplitSilence(_dataPath, _fn, _tgPath, _pitchPath, _subwavOutputPath,
-                      _minPitch, _maxPitch, _intensityPercentile,
+                      _minPitch, _maxPitch,
                       _stepSize, _numSteps, _praatEXE, _praatScriptPath)
