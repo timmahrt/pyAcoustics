@@ -14,7 +14,7 @@ from pyacoustics.utilities import my_math
 import praatio
 
 
-def audiosplitSilence(inputPath, fn, outputPath, subwavPath,
+def audiosplitSilence(inputPath, fn, tgPath, pitchPath, subwavPath,
                       minPitch, maxPitch, intensityPercentile,
                       stepSize, numSteps,
                       praatEXE, praatScriptPath,
@@ -47,14 +47,15 @@ def audiosplitSilence(inputPath, fn, outputPath, subwavPath,
                     the generated textgrids to see which wavefiles would have
                     been extracted
     '''
-    utils.makeDir(outputPath)
+    utils.makeDir(tgPath)
+    utils.makeDir(pitchPath)
     utils.makeDir(subwavPath)
     
     name = os.path.splitext(fn)[0]
     
     piSamplingRate = 100  # Samples per second
     
-    motherPIList = praat_pi.getPitch(inputPath, fn, outputPath, praatEXE,
+    motherPIList = praat_pi.getPitch(inputPath, fn, pitchPath, praatEXE,
                                      praatScriptPath, minPitch, maxPitch,
                                      sampleStep=1 / float(piSamplingRate),
                                      forceRegenerate=False)
@@ -90,7 +91,7 @@ def audiosplitSilence(inputPath, fn, outputPath, subwavPath,
     duration = audio_scripts.getSoundFileDuration(join(inputPath, fn))
     tier = praatio.IntervalTier("speech_tier", entryList, 0, duration)
     tg.addTier(tier)
-    tg.save(join(outputPath, name + '.TextGrid'))
+    tg.save(join(tgPath, name + '.TextGrid'))
 
     if generateWavs is True:
         for i, entry in enumerate(entryList):
@@ -111,6 +112,8 @@ if __name__ == "__main__":
     _fn = "introduction.wav"
     _dataPath = join('/Users/tmahrt/Dropbox/workspace/pyAcoustics/test/files')
     _outputPath = join(_dataPath, "output_stepSize_0.1")
+    _tgPath = join(_dataPath, "splitAudio_silence_stepSize_0.1")    
+    _pitchPath = join(_dataPath, "pitch")
     _wavOutputPath = join(_dataPath, "output_wavs")
     _praatEXE = "/Applications/praat.App/Contents/MacOS/Praat"
     _praatScriptPath = ("/Users/tmahrt/Dropbox/workspace/pyAcoustics/"
@@ -118,14 +121,15 @@ if __name__ == "__main__":
     utils.makeDir(_wavOutputPath)
     _rootFolderName = os.path.splitext(os.path.split(_fn)[1])[0]
     _subwavOutputPath = join(_wavOutputPath, _rootFolderName)
-    audiosplitSilence(_dataPath, _fn, _outputPath, _subwavOutputPath,
+    audiosplitSilence(_dataPath, _fn, _tgPath, _pitchPath, _subwavOutputPath,
                       _minPitch, _maxPitch, _intensityPercentile,
                       _stepSize, _numSteps, _praatEXE, _praatScriptPath)
     
     # Changing the parameters used in silence detection can lead to
     # very different results
-    _stepSize = 0.01
-    _outputPath = join(_dataPath, "output_stepSize_0.01")
-    audiosplitSilence(_dataPath, _fn, _outputPath, _subwavOutputPath,
+    _stepSize = 0.025
+    _numSteps = 10
+    _tgPath = join(_dataPath, "splitAudio_silence_stepSize_0.025")
+    audiosplitSilence(_dataPath, _fn, _tgPath, _pitchPath, _subwavOutputPath,
                       _minPitch, _maxPitch, _intensityPercentile,
                       _stepSize, _numSteps, _praatEXE, _praatScriptPath)
