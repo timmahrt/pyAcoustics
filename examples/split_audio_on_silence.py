@@ -12,7 +12,7 @@ from pyacoustics.signals import data_fitting
 from pyacoustics.utilities import utils
 from pyacoustics.utilities import my_math
 
-import praatio
+from praatio import tgio
 
 
 def audiosplitSilence(inputPath, fn, tgPath, pitchPath, subwavPath,
@@ -99,9 +99,9 @@ def audiosplitSilence(inputPath, fn, tgPath, pitchPath, subwavPath,
         entryList.sort()  # Sort by time
 
     # Create the textgrid
-    tg = praatio.Textgrid()
+    tg = tgio.Textgrid()
     duration = audio_scripts.getSoundFileDuration(join(inputPath, fn))
-    tier = praatio.IntervalTier("speech_tier", entryList, 0, duration)
+    tier = tgio.IntervalTier("speech_tier", entryList, 0, duration)
     tg.addTier(tier)
     tg.save(join(tgPath, name + '.TextGrid'))
 

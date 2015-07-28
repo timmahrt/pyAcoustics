@@ -13,7 +13,7 @@ import sys
 import subprocess
 import math
 
-import praatio
+from praatio import tgio
 
 from pyacoustics.utilities import filters
 from pyacoustics.utilities import utils
@@ -126,7 +126,7 @@ def extractPraatPitch(intensityAndPitchPath, textgridPath, tierName,
         tgFN = join(textgridPath, name + ".TextGrid")
         if not os.path.exists(tgFN):
             continue
-        tg = praatio.openTextGrid(tgFN)
+        tg = tgio.openTextGrid(tgFN)
         tier = tg.tierDict[tierName]
        
         pitchData = []
@@ -157,7 +157,7 @@ def extractRMSIntensity(intensityAndPitchPath, textgridPath, tierName,
         tgFN = join(textgridPath, name + ".TextGrid")
         if not os.path.exists(tgFN):
             continue
-        tg = praatio.openTextGrid(join(textgridPath, name + ".TextGrid"))
+        tg = tgio.openTextGrid(join(textgridPath, name + ".TextGrid"))
         tier = tg.tierDict[tierName]
         
         print(fn)

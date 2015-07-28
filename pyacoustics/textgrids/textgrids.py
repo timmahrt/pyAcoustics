@@ -9,7 +9,7 @@ from os.path import join
 
 import codecs
 
-import praatio
+from praatio import tgio
 
 from pyacoustics.utilities import utils
 
@@ -21,7 +21,7 @@ def _navigateTGs(tgPath, name, tierName):
     Each labels is output by the
     '''
     
-    tg = praatio.openTextGrid(join(tgPath, name + ".TextGrid"))
+    tg = tgio.openTextGrid(join(tgPath, name + ".TextGrid"))
     tier = tg.tierDict[tierName]
     
     for start, stop, label in tier.entryList:

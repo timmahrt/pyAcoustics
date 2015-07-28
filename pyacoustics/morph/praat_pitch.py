@@ -10,7 +10,7 @@ praat.
 import os
 from os.path import join, splitext
 
-import praatio
+from praatio import tgio
 
 from pyacoustics.intensity_and_pitch import get_f0
 
@@ -72,9 +72,9 @@ def getPitchData(pitchTierPath, path, fromFN, toFN,
         toPitchFN = os.path.splitext(toFN)[0] + ".PitchTier"
         
         # This is the raw data, undivided by labeled interval in the textgrids
-        fromPitchDataWhole = praatio.readPitchTier(pitchTierPath,
+        fromPitchDataWhole = tgio.readPitchTier(pitchTierPath,
                                                    fromPitchFN)[1]
-        toPitchDataWhole = praatio.readPitchTier(pitchTierPath,
+        toPitchDataWhole = tgio.readPitchTier(pitchTierPath,
                                                  toPitchFN)[1]
         
     else:
@@ -119,8 +119,8 @@ def f0Morph(path, fromFN, toFN, numSteps, tierName, doPlotPitchSteps,
 
     fromDuration = audio_scripts.getSoundFileDuration(join(path, fromFN))
 
-    fromTG = praatio.openTextGrid(join(path, fromName + ".TextGrid"))
-    toTG = praatio.openTextGrid(join(path, toName + ".TextGrid"))
+    fromTG = tgio.openTextGrid(join(path, fromName + ".TextGrid"))
+    toTG = tgio.openTextGrid(join(path, toName + ".TextGrid"))
 
     # Iterative pitch tier data path
     stepPitchTierPath = join(path, "stepPitchTiers")
@@ -204,7 +204,7 @@ def createPitchTierPraat(praatExe, path, fn, outputPath):
     
     common.runPraatScript(praatExe, toPitchTierScript)
     
-    pitchDataList = praatio.readPitchTier(outputPath, name + ".PitchTier")
+    pitchDataList = tgio.readPitchTier(outputPath, name + ".PitchTier")
      
     return pitchDataList
 
@@ -269,5 +269,5 @@ def savePitchData(pitchTierData, startTime, endTime, outputPath, outputFN):
                        str(len(pitchTierData) / 2),  # Num Items
                        ]
     
-    praatio.writePitchTier(outputPath, outputFN, pitchTierHeader,
+    tgio.writePitchTier(outputPath, outputFN, pitchTierHeader,
                            pitchTierData)

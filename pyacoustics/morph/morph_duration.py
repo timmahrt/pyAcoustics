@@ -8,7 +8,7 @@ import os
 from os.path import join
 import copy
 
-import praatio
+from praatio import tgio
 
 from pyacoustics.morph.morph_utils import common
 from pyacoustics.utilities import utils
@@ -184,8 +184,8 @@ def durationMorph(path, fromFN, toFN, numSteps, tierName,
     common.runPraatScript(praatExe, scriptFNFullPath)
     
     # Create the adjusted textgrids
-    fromTG = praatio.openTextGrid(fromTGFN)
-    toTG = praatio.openTextGrid(toTGFN)
+    fromTG = tgio.openTextGrid(fromTGFN)
+    toTG = tgio.openTextGrid(toTGFN)
     
     fromFN = os.path.split(fromTGFN)[1]
     adjustedTGFN = os.path.splitext(fromFN)[0] + ".TextGrid"
@@ -282,7 +282,7 @@ def durationManipulation(path, fromFN, numSteps, tierName,
                    outputFolder, praatExe)
     
     # Create the adjusted textgrids
-    fromTG = praatio.openTextGrid(fromTGFN)
+    fromTG = tgio.openTextGrid(fromTGFN)
      
     fromFN = os.path.split(fromTGFN)[1]
     adjustedTGFN = os.path.splitext(fromFN)[0] + ".TextGrid"
@@ -293,7 +293,7 @@ def durationManipulation(path, fromFN, numSteps, tierName,
 
 def morphTextgridDuration(fromTG, toTG):
     
-    adjustedTG = praatio.Textgrid()
+    adjustedTG = tgio.Textgrid()
     
     for tierName in fromTG.tierNameList:
         fromTier = fromTG.tierDict[tierName]
@@ -310,7 +310,7 @@ def manipulateTextgridDuration(fromTG, modFunc, filterFunc=None):
     if filterFunc is None:
         filterFunc = lambda x: True
     
-    adjustedTG = praatio.Textgrid()
+    adjustedTG = tgio.Textgrid()
     
     for tierName in fromTG.tierNameList:
         fromTier = fromTG.tierDict[tierName]

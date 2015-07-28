@@ -2,7 +2,7 @@
 import os
 from os.path import join
 
-import praatio
+from praatio import tgio
 
 from pyacoustics.intensity_and_pitch import praat_pi
 from pyacoustics.speech_detection import split_on_tone
@@ -36,10 +36,10 @@ def audiosplitOnTone(inputPath, fn, pitchPath, tgPath, subwavPath,
 
     # Output result as textgrid
     duration = audio_scripts.getSoundFileDuration(join(inputPath, fn))
-    tg = praatio.Textgrid()
+    tg = tgio.Textgrid()
     for key in ['beep', 'speech', 'silence']:
         entryList = timeDict[key]
-        tier = praatio.IntervalTier(key, entryList, 0, duration)
+        tier = tgio.IntervalTier(key, entryList, 0, duration)
         tg.addTier(tier)
     tg.save(join(tgPath, name + ".TextGrid"))
 

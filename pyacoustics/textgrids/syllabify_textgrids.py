@@ -7,7 +7,7 @@ Created on Oct 22, 2014
 import os
 from os.path import join
 
-import praatio
+from praatio import tgio
 from pysle import isletool
 from pysle import praattools
 
@@ -25,7 +25,7 @@ def correctTextgridTimes(tgPath, threshold):
     
     for fn in utils.findFiles(tgPath, filterExt=".TextGrid"):
         print(fn)
-        tg = praatio.openTextGrid(join(tgPath, fn))
+        tg = tgio.openTextGrid(join(tgPath, fn))
         wordTier = tg.tierDict["words"]
         phoneTier = tg.tierDict["phones"]
         
@@ -33,7 +33,7 @@ def correctTextgridTimes(tgPath, threshold):
             
             for i, phoneEntry in enumerate(phoneTier.entryList):
                 
-                if praatio.intervalOverlapCheck(wordEntry, phoneEntry):
+                if tgio.intervalOverlapCheck(wordEntry, phoneEntry):
                     
                     start = phoneEntry[0]
                     end = phoneEntry[1]
@@ -66,13 +66,13 @@ def syllabifyTextgrids(tgPath, islePath):
         if os.path.exists(join(outputPath, fn)):
             continue
 
-        tg = praatio.openTextGrid(join(tgPath, fn))
+        tg = tgio.openTextGrid(join(tgPath, fn))
         
         syllableTG = praattools.syllabifyTextgrid(isleDict, tg, "words",
                                                   "phones",
                                                   skipLabelList=skipLabelList)
         
-        outputTG = praatio.Textgrid()
+        outputTG = tgio.Textgrid()
         outputTG.addTier(tg.tierDict["words"])
         outputTG.addTier(tg.tierDict["phones"])
 #         outputTG.addTier(syllableTG.tierDict["syllable"])

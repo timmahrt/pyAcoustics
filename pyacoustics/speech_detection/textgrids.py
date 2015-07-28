@@ -7,7 +7,7 @@ Textgrid utilities for saving the output of speech detection code into
 praat textgrids.
 '''
 
-import praatio
+from praatio import tgio
 
 
 def outputTextgrid(outputFN, duration, entryList, tierName):
@@ -18,9 +18,9 @@ def outputTextgrid(outputFN, duration, entryList, tierName):
                     for i, entry in enumerate(entryList)]
     
     # Output textgrid
-    tierSpeech = praatio.IntervalTier(tierName, newEntryList, 0, duration)
+    tierSpeech = tgio.IntervalTier(tierName, newEntryList, 0, duration)
 
-    tg = praatio.Textgrid()
+    tg = tgio.Textgrid()
     tg.addTier(tierSpeech)
     tg.save(outputFN)
 
@@ -44,12 +44,12 @@ def outputStereoTextgrid(outputFN, duration, leftEntryList, rightEntryList,
                          if entry[1] <= duration and entry[0] < entry[1]]
     
     # Output textgrid
-    leftTier = praatio.IntervalTier(leftChannelName, newLeftEntryList,
+    leftTier = tgio.IntervalTier(leftChannelName, newLeftEntryList,
                                     0, duration)
-    rightTier = praatio.IntervalTier(rightChannelName, newRightEntryList,
+    rightTier = tgio.IntervalTier(rightChannelName, newRightEntryList,
                                      0, duration)
     
-    outputTG = praatio.Textgrid()
+    outputTG = tgio.Textgrid()
     outputTG.addTier(leftTier)
     outputTG.addTier(rightTier)
     

@@ -7,7 +7,7 @@ Created on Apr 2, 2015
 from os.path import join
 import subprocess
 
-import praatio
+from praatio import tgio
 
 
 def getIntervals(fn, tierName, filterFunc=None):
@@ -18,7 +18,7 @@ def getIntervals(fn, tierName, filterFunc=None):
     if filterFunc is None:
         filterFunc = lambda x: True
     
-    tg = praatio.openTextGrid(fn)
+    tg = tgio.openTextGrid(fn)
     tier = tg.tierDict[tierName]
     
     entryList = tier.entryList
