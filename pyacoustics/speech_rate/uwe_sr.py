@@ -2,6 +2,9 @@
 Created on July 28, 2015
 
 @author: tmahrt
+
+This code estimates the speech rate of a speaker by using Uwe Reichel's matlab
+script for detecting syllable nuclei over some interval.
 '''
 
 from os.path import join
