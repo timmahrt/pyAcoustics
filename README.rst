@@ -98,4 +98,8 @@ See the example folders for a few real-world examples using this library.
     suggests that someone is speaking.  This aspect is not extensively
     tested but it works well for the example files.
 
+- examples/estimate_speech_rate.py
 
+    Calculates the speech rate through a matlab script written by
+    `Uwe Reichel <http://www.phonetik.uni-muenchen.de/~reichelu/>`_
+    that estimates the location of syllable boundaries.

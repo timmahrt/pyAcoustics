@@ -18,3 +18,7 @@ def linspace(start, stop, n):
         return [stop, ]
     h = (stop - start) / float(n - 1)
     return [start + h * i for i in range(n)]
+
+
+def orderOfMagnitude(val):
+    return int(math.floor(math.log10(val)))
