@@ -19,7 +19,7 @@ def findSyllableNuclei(inputPath, outputPath, matlabEXE,
     
     pathList = [matlabScriptsPath,
                 join(matlabScriptsPath, "nucleus_detection_matlab")]
-    cmd = "extractSpeechRate('%s', '%s');" % (inputPath, outputPath)
+    cmd = "detect_syllable_nuclei('%s', '%s');" % (inputPath, outputPath)
     matlab.runMatlabFunction(cmd, matlabEXE, pathList, printCmd)
 
 

@@ -1,4 +1,5 @@
-function[] = extractSpeechRate(path_to_files, output_path)
+%   Bootstrap script for Uwe Reichels nucleus detection.  Written by Tim Mahrt
+function[] = detect_syllable_nuclei(path_to_files, output_path)
 
 files = dir(fullfile(path_to_files,'*.wav'));
 for file = files'
