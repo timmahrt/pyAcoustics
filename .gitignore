@@ -31,3 +31,6 @@ var/
 
 *.project
 *.pydevproject
+
+examples/files/*/
+examples/graveyard/*
