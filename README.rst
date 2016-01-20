@@ -1,10 +1,12 @@
 
----------
+-------------
 pyAcoustics
----------
+-------------
 
 A collection of python scripts for extracting and analyzing acoustics from audio files.
 
+.. sectnum::
+.. contents::
 
 Common Use Cases
 ================
@@ -67,13 +69,13 @@ Installation
 From a command-line shell, navigate to the directory this is located in 
 and type::
 
-	python setup.py install
+    python setup.py install
 
 If python is not in your path, you'll need to enter the full path e.g.::
 
-	C:\Python27\python.exe setup.py install
+    C:\Python27\python.exe setup.py install
 
-	
+    
 Example usage
 ================
 
@@ -103,3 +105,14 @@ See the example folders for a few real-world examples using this library.
     Calculates the speech rate through a matlab script written by
     `Uwe Reichel <http://www.phonetik.uni-muenchen.de/~reichelu/>`_
     that estimates the location of syllable boundaries.
+
+
+Citing LMEDS
+===============
+
+PyAcoustics is general purpose coding and doesn't need to be cited
+but if you would like to, it can be cited like so:
+
+Tim Mahrt. PyAcoustics. https://github.com/timmahrt/pyAcoustics, 2016.
+
+
