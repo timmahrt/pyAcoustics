@@ -12,8 +12,6 @@ setup(name='pyacoustics',
       packages=[
       			'pyacoustics',
       			'pyacoustics.intensity_and_pitch',
-                'pyacoustics.morph',
-                'pyacoustics.morph.morph_utils',
                 'pyacoustics.signals',
                 'pyacoustics.speech_detection',
                 'pyacoustics.speech_rate',
