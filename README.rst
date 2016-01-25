@@ -38,6 +38,22 @@ What can you do with this library?
 - And more!
 
 
+Major revisions
+================
+
+Ver 1.0 (June 7, 2015)
+
+- first public release.
+
+
+Features as they are added
+================
+
+Find syllable nuclei/estimate speech rate using Uwe Reichel's matlab code
+(July 29, 2015) 
+
+Find the valley bottom between peaks (July 7th, 2015)
+
 Requirements
 ================
 
