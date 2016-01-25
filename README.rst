@@ -116,3 +116,12 @@ but if you would like to, it can be cited like so:
 Tim Mahrt. PyAcoustics. https://github.com/timmahrt/pyAcoustics, 2016.
 
 
+Acknowledgements
+================
+
+PyAcoustics is an ongoing collection of code with contributions from a
+number of projects worked on over several years.  Development of various
+aspects of PyAcoustics was possible thanks to NSF grant IIS 07-03624
+to Jennifer Cole and Mark Hasegawa-Johnson, NSF grant NSF grant BCS 12-51343
+to Jennifer Cole, José Hualde, and Caroline Smith, and NSF grant
+IBSS SMA 14-16791 to Jennifer Cole, Nancy McElwain, and Daniel Berry.
