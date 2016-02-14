@@ -3,6 +3,9 @@
 pyAcoustics
 -------------
 
+.. image:: https://img.shields.io/badge/license-MIT-blue.svg?
+   :target: http://opensource.org/licenses/MIT
+
 A collection of python scripts for extracting and analyzing acoustics from audio files.
 
 .. sectnum::

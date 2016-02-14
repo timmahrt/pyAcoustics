@@ -18,7 +18,7 @@ def zscoreNormalizeValue(value, distribution):
     '''
     mean = sum(distribution) / len(distribution)
     
-    tmpList = [(value - mean) ** 2 for value in distribution]
+    tmpList = [(tmpVal - mean) ** 2 for tmpVal in distribution]
     standardDeviation = sum(tmpList) / len(tmpList)
     
     return _zscoreNormalize(value, mean, standardDeviation)
