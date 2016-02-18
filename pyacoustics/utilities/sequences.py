@@ -241,7 +241,7 @@ def subsequenceGenerator(dataList, chunkSize, sampleFunc, stepSizeFlag):
     
     
 def interp(start, stop, n):
-    for i in xrange(n):
+    for i in range(n):
         yield start + i * (stop - start) / float(n - 1)
 
 
@@ -256,7 +256,7 @@ def getEvenlySpacedSteps(start, end, n):
     # The usual case
     if n != 1:
         step = (end - start) / float(n - 1)
-        retList = [int(round(start + x * step)) for x in xrange(n)]
+        retList = [int(round(start + x * step)) for x in range(n)]
         
     # If someone only wants 1 sample, just take the middle sample
     elif n == 1:

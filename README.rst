@@ -85,8 +85,10 @@ My praatIO library is used extensively and can be downloaded
 Installation
 ================
 
-From a command-line shell, navigate to the directory this is located in 
-and type::
+If you on Windows, you can use the installer found here (check that it is up to date though)
+`Windows installer <http://www.timmahrt.com/python_installers>`_
+
+Otherwise, to manually install, after downloading the source from github, from a command-line shell, navigate to the directory containing setup.py and type::
 
     python setup.py install
 

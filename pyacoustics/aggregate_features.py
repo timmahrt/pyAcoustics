@@ -40,7 +40,7 @@ def aggregateFeatures(featurePath, featureList, headerStr=None):
         
         name = os.path.splitext(featureFN)[0]
         
-        dataList.insert(0, [name for _ in xrange(len(dataList[0]))])
+        dataList.insert(0, [name for _ in range(len(dataList[0]))])
         tDataList = utils.safeZip(dataList, enforceLength=True)
         outputList = [",".join(row) for row in tDataList]
         outputTxt = "\n".join(outputList)
