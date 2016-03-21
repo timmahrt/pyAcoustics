@@ -4,6 +4,7 @@ Created on Oct 16, 2012
 @author: timmahrt
 '''
 
+import math
 
 def _zscoreNormalize(raw, mean, stdDev):
     # No problems related to integers or 64-bit floats (which don't trigger
@@ -19,7 +20,7 @@ def zscoreNormalizeValue(value, distribution):
     mean = sum(distribution) / len(distribution)
     
     tmpList = [(tmpVal - mean) ** 2 for tmpVal in distribution]
-    standardDeviation = sum(tmpList) / len(tmpList)
+    standardDeviation = math.sqrt(sum(tmpList) / len(tmpList))
     
     return _zscoreNormalize(value, mean, standardDeviation)
 
