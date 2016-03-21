@@ -37,6 +37,10 @@ What can you do with this library?
 - Programmatically manipulate pitch or duration of a file::
 
     pyacoustics.morph.morph_utils.praat_pitch()
+    
+- Mask speech with speech shaped noise::
+
+    pyacoustics.speech_filters.speech_shaped_noise.batchMaskSpeakerData()
 
 - And more!
 
@@ -51,6 +55,9 @@ Ver 1.0 (June 7, 2015)
 
 Features as they are added
 ================
+
+Mask speech with speech shaped noise
+(March 21, 2016)
 
 Find syllable nuclei/estimate speech rate using Uwe Reichel's matlab code
 (July 29, 2015) 
