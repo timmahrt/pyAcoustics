@@ -153,6 +153,6 @@ aspects of PyAcoustics was possible thanks to
 NSF grant **IIS 07-03624**
 to Jennifer Cole and Mark Hasegawa-Johnson,
 NSF grant BCS **12-51343**
-to Jennifer Cole, José Hualde, and Caroline Smith, and
+to Jennifer Cole, JosÃ© Hualde, and Caroline Smith, and
 NSF grant
 **IBSS SMA 14-16791** to Jennifer Cole, Nancy McElwain, and Daniel Berry.
