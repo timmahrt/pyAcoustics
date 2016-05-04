@@ -5,7 +5,8 @@ from os.path import join
 import datetime
 now = datetime.datetime.now
 
-from pyacoustics.intensity_and_pitch import praat_pi
+from praatio import pitch_and_intensity
+
 from pyacoustics.speech_detection import naive_vad
 from pyacoustics.signals import audio_scripts
 from pyacoustics.signals import data_fitting
@@ -55,11 +56,14 @@ def audiosplitSilence(inputPath, fn, tgPath, pitchPath, subwavPath,
     name = os.path.splitext(fn)[0]
     
     piSamplingRate = 100  # Samples per second
-    
-    motherPIList = praat_pi.getPitch(inputPath, fn, pitchPath, praatEXE,
-                                     praatScriptPath, minPitch, maxPitch,
-                                     sampleStep=1 / float(piSamplingRate),
-                                     forceRegenerate=False)
+    sampleStep = 1 / float(piSamplingRate)
+    outputFN = os.path.splitext(fn)[0] + ".txt"
+    motherPIList = pitch_and_intensity.audioToPI(inputPath, fn,
+                                                 pitchPath, outputFN,
+                                                 praatEXE,
+                                                 minPitch, maxPitch,
+                                                 sampleStep=sampleStep,
+                                                 forceRegenerate=False)
 
     # entry = (time, pitchVal, intVal)
     motherPIList = [float(entry[2]) for entry in motherPIList]
@@ -74,8 +78,8 @@ def audiosplitSilence(inputPath, fn, tgPath, pitchPath, subwavPath,
     # data_fitting.getBimodalValley()
 #     silenceThreshold = naive_vad.getIntensityPercentile(motherPIList,
 #                                                         intensityPercentile)
-    silenceThreshold = data_fitting.getBimodalValley(motherPIList, doplot=False)
-    print silenceThreshold
+    silenceThreshold = data_fitting.getBimodalValley(motherPIList, doplot=True)
+    print(silenceThreshold)
     entryList = naive_vad.naiveVAD(motherPIList, silenceThreshold,
                                    piSamplingRate, stepSize, numSteps)
     entryList = [(time[0], time[1], str(i))

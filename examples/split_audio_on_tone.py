@@ -3,8 +3,8 @@ import os
 from os.path import join
 
 from praatio import tgio
+from praatio import pitch_and_intensity
 
-from pyacoustics.intensity_and_pitch import praat_pi
 from pyacoustics.speech_detection import split_on_tone
 from pyacoustics.utilities import utils
 from pyacoustics.signals import audio_scripts
@@ -12,7 +12,7 @@ from pyacoustics.signals import audio_scripts
 
 def audiosplitOnTone(inputPath, fn, pitchPath, tgPath, subwavPath,
                      minPitch, maxPitch, toneFrequency, minEventDuration,
-                     praatEXE, praatScriptPath, forceRegeneratePitch,
+                     praatEXE, praatScriptPath, forceRegen,
                      generateWavs=False):
     
     utils.makeDir(pitchPath)
@@ -23,10 +23,14 @@ def audiosplitOnTone(inputPath, fn, pitchPath, tgPath, subwavPath,
     piSamplingRate = 100  # Samples per second
 
     # Extract pitch and find patterns in the file
-    motherPIList = praat_pi.getPitch(inputPath, fn, pitchPath, praatEXE,
-                                     praatScriptPath, minPitch, maxPitch,
-                                     sampleStep=1 / float(piSamplingRate),
-                                     forceRegenerate=forceRegeneratePitch)
+    outputFN = os.path.splitext(fn)[0] + ".txt"
+    sampleStep = 1 / float(piSamplingRate)
+    motherPIList = pitch_and_intensity.audioToPI(inputPath, fn,
+                                                 pitchPath, outputFN,
+                                                 praatEXE,
+                                                 minPitch, maxPitch,
+                                                 sampleStep=sampleStep,
+                                                 forceRegenerate=forceRegen)
     # entry = (time, pitchVal, intVal)
     pitchList = [float(entry[1]) for entry in motherPIList]
     timeDict = split_on_tone.splitFileOnTone(pitchList,
