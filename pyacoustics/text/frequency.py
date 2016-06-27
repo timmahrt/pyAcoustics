@@ -10,33 +10,31 @@ from rpt_feature_suite.utilities import utils
 
 class CountCorpus(object):
     
-    
     def __init__(self, frequencyDict, totalCount=None):
         '''
         A generic class for handling corpora.
         
         For large corpora you can save the totalCount somewhere and pass it
-        in during instantiation.  Otherwise, it will be calculated at 
+        in during instantiation.  Otherwise, it will be calculated at
         runtime.
         '''
         self.frequencyDict = frequencyDict
         
-        if totalCount == None:
+        if totalCount is None:
             totalCount = self._getNumWords()
         self.totalCount = totalCount
-    
     
     def getFrequency(self, word, normFunc=None, outOfDictionaryValue=None):
         try:
             count = self.frequencyDict[word]
         except KeyError:
-            if outOfDictionaryValue == None:
+            if outOfDictionaryValue is None:
                 raise
             else:
                 print("OOD Word: %s" % word)
                 count = outOfDictionaryValue
         
-        if normFunc == None:
+        if normFunc is None:
             freq = float(count) / self.totalCount
         else:
             freq = normFunc(count, self.totalCount)
@@ -44,7 +42,6 @@ class CountCorpus(object):
         logFreq = math.log(freq)
         
         return count, freq, logFreq
-        
         
     def _getNumWords(self):
         '''
@@ -56,8 +53,7 @@ class CountCorpus(object):
             
         return sumV
     
-    
-        
+
 class GoogleUnigram(CountCorpus):
     
     NUM_WORDS = 1024908267229.0
@@ -66,13 +62,15 @@ class GoogleUnigram(CountCorpus):
         
         # Load the corpus data
         frequencyDict = {}
-        data = open(googleUnigram, "r").read()
+        with open(googleUnigram, "r") as fd:
+            data = fd.read()
         dataList = data.split()
-        for (word, count) in izip(islice(dataList, 0, None, 2), islice(dataList, 1, None, 2)):
+        for (word, count) in izip(islice(dataList, 0, None, 2),
+                                  islice(dataList, 1, None, 2)):
             frequencyDict[word] = count
             
-        super(GoogleUnigram, self).__init__(frequencyDict, GoogleUnigram.NUM_WORDS)
-
+        super(GoogleUnigram, self).__init__(frequencyDict,
+                                            GoogleUnigram.NUM_WORDS)
 
 
 class Switchboard(CountCorpus):
@@ -83,10 +81,12 @@ class Switchboard(CountCorpus):
         
         # Load the corpus
         frequencyDict = {}
-        data = open(switchboardCounts, "r").read()
+        with open(switchboardCounts, "r") as fd:
+            data = fd.read()
         
         dataList = data.split("\n")
-        dataList = [row[1:-2].strip() for row in dataList if len(row) > 2 and row[0] != ";"]
+        dataList = [row[1:-2].strip() for row in dataList
+                    if len(row) > 2 and row[0] != ";"]
         dataList = [row.split(" ") for row in dataList]
         
         for row in dataList:
@@ -103,14 +103,13 @@ class SwitchboardTim(CountCorpus):
     
     def __init__(self, switchboardCounts):
         frequencyDict = loadCountList(switchboardCounts)
-        super(SwitchboardTim, self).__init__(frequencyDict, SwitchboardTim.NUM_WORDS)
-        
+        super(SwitchboardTim, self).__init__(frequencyDict,
+                                             SwitchboardTim.NUM_WORDS)
         
         
 class Buckeye(CountCorpus):
     
     NUM_WORDS = 35009.0
-#     
     
     def __init__(self, buckeyeCounts):
         frequencyDict = loadCountList(buckeyeCounts)
@@ -119,7 +118,7 @@ class Buckeye(CountCorpus):
 
 class Fischer(CountCorpus):
 
-    NUM_WORDS = 21025946
+    NUM_WORDS = 21025946.0
 
     def __init__(self, fischerCounts):
         frequencyDict = loadCountList(fischerCounts)
@@ -141,7 +140,7 @@ class FrenchCorpus(CountCorpus):
     
     def __init__(self, frenchCounts):
         frequencyDict = loadCountList(frenchCounts)
-        super(FrenchCorpus, self).__init__(FrenchCorpus, 0)
+        super(FrenchCorpus, self).__init__(frequencyDict, 0)
 
 
 def calcWordsPerMillion(count, totalCount):
@@ -152,7 +151,8 @@ def calcWordsPerMillion(count, totalCount):
 
 def loadFrenchList(fnFullPath, outputFullPath):
     
-    data = codecs.open(fnFullPath, "rU", encoding="utf-8").read()
+    with codecs.open(fnFullPath, "rU", encoding="utf-8") as fd:
+        data = fd.read()
     frequencyDict = {}
     
     dataList = data.splitlines()
@@ -165,18 +165,20 @@ def loadFrenchList(fnFullPath, outputFullPath):
         if word == countList[-1][0]:
             countList[-1] = (word, countList[-1][1] + count)
         else:
-            countList.append( (word, count) )
+            countList.append((word, count))
     
-    countList = [",".join( (word, str(count)) ) for word, count in countList]
+    countList = [",".join((word, str(count))) for word, count in countList]
     
-    codecs.open(outputFullPath, "w", encoding="utf-8").write("\n".join(countList))
+    with codecs.open(outputFullPath, "w", encoding="utf-8") as fd:
+        fd.write("\n".join(countList))
 
 
 def loadCountList(fnFullPath):
     '''
-    Loads counts from a file that stores word counts in the form "word, count\n"
+    Loads counts from file that stores word counts in the form "word, count\n"
     '''
-    data = codecs.open(fnFullPath, "rU", encoding="utf-8").read()
+    with codecs.open(fnFullPath, "rU", encoding="utf-8") as fd:
+        data = fd.read()
     frequencyDict = {}
     
     dataList = data.split("\n")
@@ -199,11 +201,11 @@ def findFrequenciesForWordLists(featurePath, countObj, frequencyNormFunc):
         wordList = utils.openCSV(wordsPath, fn, valueIndex=0, encoding="utf-8")
         countList = []
         for word in wordList:
-            count, freq, logFreq = countObj.getFrequency(word, frequencyNormFunc, outOfDictionaryValue=1)
+            tmp = countObj.getFrequency(word,
+                                        frequencyNormFunc,
+                                        outOfDictionaryValue=1)
+            count, freq, logFreq = tmp
             countList.append("%f,%f,%f" % (count, freq, logFreq))
             
-        open(join(frequencyPath, fn), "w").write("\n".join(countList))
-    
-
-        
-        
+        with open(join(frequencyPath, fn), "w") as fd:
+            fd.write("\n".join(countList))

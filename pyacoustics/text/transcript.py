@@ -18,9 +18,10 @@ def toWords(featurePath, outputPath):
     transcriptPath = join(featurePath, "txt")
 
     for fn in utils.findFiles(transcriptPath, filterExt=".txt"):
-        data = codecs.open(join(transcriptPath, fn), "r", encoding="utf-8").read()
+        fnFullPath = join(transcriptPath, fn)
+        with codecs.open(fnFullPath, "r", encoding="utf-8") as fd:
+            data = fd.read()
         dataList = data.split()
         
-        codecs.open(join(outputPath, fn), "w", encoding="utf-8").write("\n".join(dataList))
-
-
+        with codecs.open(join(outputPath, fn), "w", encoding="utf-8") as fd:
+            fd.write("\n".join(dataList))

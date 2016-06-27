@@ -47,8 +47,9 @@ def extractTGInfo(inputPath, outputPath, tierName):
             outputList.append("%f,%f,%s" % (start, stop, label))
             
         outputTxt = "\n".join(outputList)
-        codecs.open(join(outputPath, name + ".txt"), "w",
-                    encoding="utf-8").write(outputTxt)
+        outputFN = join(outputPath, name + ".txt")
+        with codecs.open(outputFN, "w", encoding="utf-8") as fd:
+            fd.write(outputTxt)
 
 
 def extractTranscript(featurePath, tierName):
@@ -69,8 +70,9 @@ def extractTranscript(featurePath, tierName):
             outputList.append("%s" % (label))
         
         outputTxt = "\n".join(outputList)
-        codecs.open(join(outputPath, name + ".txt"), "w",
-                    encoding="utf-8").write(outputTxt)
+        outputFN = join(outputPath, name + ".txt")
+        with codecs.open(outputFN, "w", encoding="utf-8") as fd:
+            fd.write(outputTxt)
 
 
 def extractWords(tgPath, tierName, outputPath):
@@ -85,5 +87,6 @@ def extractWords(tgPath, tierName, outputPath):
                 outputList.append("%s" % (word))
         
         outputTxt = "\n".join(outputList)
-        codecs.open(join(outputPath, name + ".txt"), "w",
-                    encoding="utf-8").write(outputTxt)
+        outputFN = join(outputPath, name + ".txt")
+        with codecs.open(outputFN, "w", encoding="utf-8") as fd:
+            fd.write(outputTxt)

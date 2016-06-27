@@ -62,4 +62,6 @@ if __name__ == "__main__":
     for name in utils.findFiles(path, filterExt=".wav", stripExt=True):
         tmpPitchList = extractPitch(join(path, name + ".wav"), 75, 450)
         tmpPitchList = [str(val) for val in tmpPitchList]
-        open(join(path, name + "_f0.csv"), "w").write("\n".join(tmpPitchList))
+        
+        with open(join(path, name + "_f0.csv"), "w") as fd:
+            fd.write("\n".join(tmpPitchList))

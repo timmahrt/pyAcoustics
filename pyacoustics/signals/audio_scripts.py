@@ -49,13 +49,15 @@ def getSerializedFileDuration(fn):
     if not os.path.exists(durationFN):
         duration = getSoundFileDuration(fn)
         try:
-            open(durationFN, "w").write(str(duration))
+            with open(durationFN, "w") as fd:
+                fd.write(str(duration))
         except IOError:
             # If we don't have write permissions, there isn't anything we can
             # do, the user should still be able to get their data
             pass
     else:
-        duration = float(open(durationFN, "r").read())
+        with open(durationFN, "r") as fd:
+            duration = float(fd.read())
         
     return duration
 

@@ -65,7 +65,8 @@ def manualPhoneCount(tgInfoPath, isleFN, outputPath, skipList=None):
         
         outputTxt = "\n".join(outputList)
         
-        open(join(outputPath, fn), "w").write(outputTxt)
+        with open(join(outputPath, fn), "w") as fd:
+            fd.write(outputTxt)
         
 
 def manualPhoneCountForEpochs(manualCountsPath, tgInfoPath, epochPath,
@@ -108,4 +109,5 @@ def manualPhoneCountForEpochs(manualCountsPath, tgInfoPath, epochPath,
                                                  epochPhoneCount,
                                                  speechDuration))
         
-        open(join(outputPath, fn), "w").write("\n".join(epochOutputList))
+        with open(join(outputPath, fn), "w") as fd:
+            fd.write("\n".join(epochOutputList))

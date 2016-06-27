@@ -45,8 +45,9 @@ def aggregateFeatures(featurePath, featureList, headerStr=None):
         outputList = [",".join(row) for row in tDataList]
         outputTxt = "\n".join(outputList)
         
-        codecs.open(join(outputDir, name + ".csv"),
-                    "w", encoding="utf-8").write(outputTxt)
+        outputFN = join(outputDir, name + ".csv")
+        with codecs.open(outputFN, "w", encoding="utf-8") as fd:
+            fd.write(outputTxt)
         
     # Cat all files together
     aggrOutput = []
@@ -57,6 +58,8 @@ def aggregateFeatures(featurePath, featureList, headerStr=None):
     for fn in utils.findFiles(outputDir, filterExt=".csv"):
         if fn == "all.csv":
             continue
-        aggrOutput.append(open(join(outputDir, fn), "rU").read())
+        with open(join(outputDir, fn), "rU") as fd:
+            aggrOutput.append(fd.read())
     
-    open(join(outputDir, "all.csv"), "w").write("\n".join(aggrOutput))
+    with open(join(outputDir, "all.csv"), "w") as fd:
+        fd.write("\n".join(aggrOutput))

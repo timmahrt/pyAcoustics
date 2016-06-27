@@ -122,43 +122,50 @@ def extractLines(path, matchStr, outputDir="output"):
     makeDir(outputPath)
     
     for fn in findFiles(path, filterExt=".csv"):
-        data = open(join(path, fn), "rU").read()
+        with open(join(path, fn), "rU") as fd:
+            data = fd.read()
         dataList = data.split("\n")
         
         dataList = [line for line in dataList if matchStr in line]
         
-        open(join(outputPath, fn), "w").write("\n".join(dataList))
+        with open(join(outputPath, fn), "w") as fd:
+            fd.write("\n".join(dataList))
 
 
 def cat(fn1, fn2, outputFN):
-    txt1 = open(fn1, 'r').read()
-    txt2 = open(fn2, 'r').read()
+    with open(fn1, 'r') as fd:
+        txt1 = fd.read()
+    with open(fn2, 'r') as fd:
+        txt2 = fd.read()
     
-    open(outputFN, 'w').write(txt1 + txt2)
-    
-    
+    with open(outputFN, 'w') as fd:
+        fd.write(txt1 + txt2)
+
+
 def catAll(path, ext, ensureNewline=False):
     outputPath = join(path, "cat_output")
     makeDir(outputPath)
-    
+
     outputList = []
     for fn in findFiles(path, filterExt=ext):
-        data = open(join(path, fn), "rU").read()
-        
+        with open(join(path, fn), "rU") as fd:
+            data = fd.read()
+
         if ensureNewline and data[-1] != "\n":
             data += "\n"
-        
+
         outputList.append(data)
-    
+
     outputTxt = "".join(outputList)
-    open(join(outputPath, "catFiles" + ext), "w").write(outputTxt)
-    
-    
+    with open(join(outputPath, "catFiles" + ext), "w") as fd:
+        fd.write(outputTxt)
+
+
 def whatever(path):
     outputList = []
     for fn in findFiles(path, filterExt=".txt"):
         outputList.extend([fn, ] * 30)
-        
+
     for fn in outputList:
         print(fn)
 
@@ -168,14 +175,14 @@ def divide(numerator, denominator, zeroValue):
         retValue = zeroValue
     else:
         retValue = numerator / float(denominator)
-        
+
     return retValue
 
 
 def safeZip(listOfLists, enforceLength):
-    
+
     if enforceLength is True:
         length = len(listOfLists[0])
         assert(all([length == len(subList) for subList in listOfLists]))
-    
+
     return itertools.izip_longest(*listOfLists)
