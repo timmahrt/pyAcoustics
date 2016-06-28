@@ -10,7 +10,14 @@ from os.path import join
 import functools
 import itertools
 import shutil
-import codecs
+import io
+import inspect
+
+
+pyAcousticsPath = os.path.split(inspect.getfile(inspect.currentframe()))[0]
+# Get out of the 'utilities' folder
+pyAcousticsPath = os.path.split(pyAcousticsPath)[0]
+scriptsPath = join(pyAcousticsPath, "praatScripts")
 
 
 def _getMatchFunc(pattern):
@@ -88,7 +95,7 @@ def openCSV(path, fn, valueIndex=None, encoding="ascii"):
     '''
     
     # Load CSV file
-    with codecs.open(join(path, fn), "rU", encoding=encoding) as fd:
+    with io.open(join(path, fn), "r", encoding=encoding) as fd:
         featureList = fd.read().splitlines()
     featureList = [row.split(",") for row in featureList]
     
@@ -122,23 +129,23 @@ def extractLines(path, matchStr, outputDir="output"):
     makeDir(outputPath)
     
     for fn in findFiles(path, filterExt=".csv"):
-        with open(join(path, fn), "rU") as fd:
+        with io.open(join(path, fn), "r") as fd:
             data = fd.read()
         dataList = data.split("\n")
         
         dataList = [line for line in dataList if matchStr in line]
         
-        with open(join(outputPath, fn), "w") as fd:
+        with io.open(join(outputPath, fn), "w") as fd:
             fd.write("\n".join(dataList))
 
 
 def cat(fn1, fn2, outputFN):
-    with open(fn1, 'r') as fd:
+    with io.open(fn1, 'r') as fd:
         txt1 = fd.read()
-    with open(fn2, 'r') as fd:
+    with io.open(fn2, 'r') as fd:
         txt2 = fd.read()
     
-    with open(outputFN, 'w') as fd:
+    with io.open(outputFN, 'w') as fd:
         fd.write(txt1 + txt2)
 
 
@@ -148,7 +155,7 @@ def catAll(path, ext, ensureNewline=False):
 
     outputList = []
     for fn in findFiles(path, filterExt=ext):
-        with open(join(path, fn), "rU") as fd:
+        with io.open(join(path, fn), "r") as fd:
             data = fd.read()
 
         if ensureNewline and data[-1] != "\n":
@@ -157,7 +164,7 @@ def catAll(path, ext, ensureNewline=False):
         outputList.append(data)
 
     outputTxt = "".join(outputList)
-    with open(join(outputPath, "catFiles" + ext), "w") as fd:
+    with io.open(join(outputPath, "catFiles" + ext), "w") as fd:
         fd.write(outputTxt)
 
 

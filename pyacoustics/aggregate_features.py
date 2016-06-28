@@ -6,8 +6,7 @@ Created on Oct 20, 2014
 
 import os
 from os.path import join
-
-import codecs
+import io
 
 from pyacoustics.utilities import utils
 
@@ -46,7 +45,7 @@ def aggregateFeatures(featurePath, featureList, headerStr=None):
         outputTxt = "\n".join(outputList)
         
         outputFN = join(outputDir, name + ".csv")
-        with codecs.open(outputFN, "w", encoding="utf-8") as fd:
+        with io.open(outputFN, "w", encoding="utf-8") as fd:
             fd.write(outputTxt)
         
     # Cat all files together
@@ -58,8 +57,8 @@ def aggregateFeatures(featurePath, featureList, headerStr=None):
     for fn in utils.findFiles(outputDir, filterExt=".csv"):
         if fn == "all.csv":
             continue
-        with open(join(outputDir, fn), "rU") as fd:
+        with io.open(join(outputDir, fn), "r") as fd:
             aggrOutput.append(fd.read())
     
-    with open(join(outputDir, "all.csv"), "w") as fd:
+    with io.open(join(outputDir, "all.csv"), "w") as fd:
         fd.write("\n".join(aggrOutput))

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-import os
+
 from os.path import join
 from itertools import izip, islice
 import math
-import codecs
+import io
 
-from rpt_feature_suite.utilities import utils
+from pyacoustics.utilities import utils
 
 
 class CountCorpus(object):
@@ -151,7 +151,7 @@ def calcWordsPerMillion(count, totalCount):
 
 def loadFrenchList(fnFullPath, outputFullPath):
     
-    with codecs.open(fnFullPath, "rU", encoding="utf-8") as fd:
+    with io.open(fnFullPath, "r", encoding="utf-8") as fd:
         data = fd.read()
     frequencyDict = {}
     
@@ -169,7 +169,7 @@ def loadFrenchList(fnFullPath, outputFullPath):
     
     countList = [",".join((word, str(count))) for word, count in countList]
     
-    with codecs.open(outputFullPath, "w", encoding="utf-8") as fd:
+    with io.open(outputFullPath, "w", encoding="utf-8") as fd:
         fd.write("\n".join(countList))
 
 
@@ -177,7 +177,7 @@ def loadCountList(fnFullPath):
     '''
     Loads counts from file that stores word counts in the form "word, count\n"
     '''
-    with codecs.open(fnFullPath, "rU", encoding="utf-8") as fd:
+    with io.open(fnFullPath, "r", encoding="utf-8") as fd:
         data = fd.read()
     frequencyDict = {}
     
