@@ -57,8 +57,8 @@ def aggregateFeatures(featurePath, featureList, headerStr=None):
     for fn in utils.findFiles(outputDir, filterExt=".csv"):
         if fn == "all.csv":
             continue
-        with io.open(join(outputDir, fn), "r") as fd:
+        with io.open(join(outputDir, fn), "r", encoding='utf-8') as fd:
             aggrOutput.append(fd.read())
     
-    with io.open(join(outputDir, "all.csv"), "w") as fd:
+    with io.open(join(outputDir, "all.csv"), "w", encoding='utf-8') as fd:
         fd.write("\n".join(aggrOutput))

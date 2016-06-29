@@ -83,7 +83,7 @@ def findFiles(path, filterPaths=False, filterExt=None, filterPattern=None,
     return fnList
     
 
-def openCSV(path, fn, valueIndex=None, encoding="ascii"):
+def openCSV(path, fn, valueIndex=None, encoding="utf-8"):
     '''
     Load a feature
     
@@ -129,23 +129,23 @@ def extractLines(path, matchStr, outputDir="output"):
     makeDir(outputPath)
     
     for fn in findFiles(path, filterExt=".csv"):
-        with io.open(join(path, fn), "r") as fd:
+        with io.open(join(path, fn), "r", encoding='utf-8') as fd:
             data = fd.read()
         dataList = data.split("\n")
         
         dataList = [line for line in dataList if matchStr in line]
         
-        with io.open(join(outputPath, fn), "w") as fd:
+        with io.open(join(outputPath, fn), "w", encoding='utf-8') as fd:
             fd.write("\n".join(dataList))
 
 
 def cat(fn1, fn2, outputFN):
-    with io.open(fn1, 'r') as fd:
+    with io.open(fn1, 'r', encoding='utf-8') as fd:
         txt1 = fd.read()
-    with io.open(fn2, 'r') as fd:
+    with io.open(fn2, 'r', encoding='utf-8') as fd:
         txt2 = fd.read()
     
-    with io.open(outputFN, 'w') as fd:
+    with io.open(outputFN, 'w', encoding='utf-8') as fd:
         fd.write(txt1 + txt2)
 
 
@@ -155,7 +155,7 @@ def catAll(path, ext, ensureNewline=False):
 
     outputList = []
     for fn in findFiles(path, filterExt=ext):
-        with io.open(join(path, fn), "r") as fd:
+        with io.open(join(path, fn), "r", encoding='utf-8') as fd:
             data = fd.read()
 
         if ensureNewline and data[-1] != "\n":
@@ -164,7 +164,8 @@ def catAll(path, ext, ensureNewline=False):
         outputList.append(data)
 
     outputTxt = "".join(outputList)
-    with io.open(join(outputPath, "catFiles" + ext), "w") as fd:
+    outputFN = join(outputPath, "catFiles" + ext)
+    with io.open(outputFN, "w", encoding='utf-8') as fd:
         fd.write(outputTxt)
 
 
