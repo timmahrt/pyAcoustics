@@ -6,6 +6,7 @@ Created on Oct 15, 2014
 @author: tmahrt
 '''
 from distutils.core import setup
+import codecs
 setup(name='pyacoustics',
       version='1.0.0',
       author='Tim Mahrt',
@@ -22,6 +23,6 @@ setup(name='pyacoustics',
                 'pyacoustics.utilities',
                 ],
       license='LICENSE',
-      long_description=open('README.rst', 'r').read(),
+      long_description=codecs.open('README.rst', 'r', encoding="utf-8").read(),
 #       install_requires=[], # No requirements! # requires 'from setuptools import setup'
       )
