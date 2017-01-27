@@ -23,6 +23,7 @@ setup(name='pyacoustics',
                 'pyacoustics.utilities',
                 ],
       license='LICENSE',
+      description="A collection of python scripts for extracting and analyzing acoustics from audio files.",
       long_description=codecs.open('README.rst', 'r', encoding="utf-8").read(),
 #       install_requires=[], # No requirements! # requires 'from setuptools import setup'
       )
