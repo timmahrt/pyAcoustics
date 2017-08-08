@@ -58,8 +58,8 @@ def audiosplitSilence(inputPath, fn, tgPath, pitchPath, subwavPath,
     piSamplingRate = 100  # Samples per second
     sampleStep = 1 / float(piSamplingRate)
     outputFN = os.path.splitext(fn)[0] + ".txt"
-    motherPIList = pitch_and_intensity.audioToPI(inputPath, fn,
-                                                 pitchPath, outputFN,
+    motherPIList = pitch_and_intensity.extractPI(join(inputPath, fn),
+                                                 join(pitchPath, outputFN),
                                                  praatEXE,
                                                  minPitch, maxPitch,
                                                  sampleStep=sampleStep,

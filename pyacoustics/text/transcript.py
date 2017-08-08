@@ -6,7 +6,7 @@ Created on Oct 20, 2014
 
 from os.path import join
 
-import codecs
+import io
 
 from pyacoustics.utilities import utils
 
@@ -19,9 +19,9 @@ def toWords(featurePath, outputPath):
 
     for fn in utils.findFiles(transcriptPath, filterExt=".txt"):
         fnFullPath = join(transcriptPath, fn)
-        with codecs.open(fnFullPath, "r", encoding="utf-8") as fd:
+        with io.open(fnFullPath, "r", encoding="utf-8") as fd:
             data = fd.read()
         dataList = data.split()
         
-        with codecs.open(join(outputPath, fn), "w", encoding="utf-8") as fd:
+        with io.open(join(outputPath, fn), "w", encoding="utf-8") as fd:
             fd.write("\n".join(dataList))

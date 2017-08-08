@@ -25,7 +25,7 @@ def correctTextgridTimes(tgPath, threshold):
     
     for fn in utils.findFiles(tgPath, filterExt=".TextGrid"):
         print(fn)
-        tg = tgio.openTextGrid(join(tgPath, fn))
+        tg = tgio.openTextgrid(join(tgPath, fn))
         wordTier = tg.tierDict["words"]
         phoneTier = tg.tierDict["phones"]
         
@@ -66,7 +66,7 @@ def syllabifyTextgrids(tgPath, islePath):
         if os.path.exists(join(outputPath, fn)):
             continue
 
-        tg = tgio.openTextGrid(join(tgPath, fn))
+        tg = tgio.openTextgrid(join(tgPath, fn))
         
         syllableTG = praattools.syllabifyTextgrid(isleDict, tg, "words",
                                                   "phones",

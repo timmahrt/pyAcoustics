@@ -25,8 +25,8 @@ def audiosplitOnTone(inputPath, fn, pitchPath, tgPath, subwavPath,
     # Extract pitch and find patterns in the file
     outputFN = os.path.splitext(fn)[0] + ".txt"
     sampleStep = 1 / float(piSamplingRate)
-    motherPIList = pitch_and_intensity.audioToPI(inputPath, fn,
-                                                 pitchPath, outputFN,
+    motherPIList = pitch_and_intensity.extractPI(join(inputPath, fn),
+                                                 join(pitchPath, outputFN),
                                                  praatEXE,
                                                  minPitch, maxPitch,
                                                  sampleStep=sampleStep,

@@ -7,7 +7,7 @@ Created on Oct 20, 2014
 import os
 from os.path import join
 
-import codecs
+import io
 
 from praatio import tgio
 
@@ -21,7 +21,7 @@ def _navigateTGs(tgPath, name, tierName):
     Each labels is output by the
     '''
     
-    tg = tgio.openTextGrid(join(tgPath, name + ".TextGrid"))
+    tg = tgio.openTextgrid(join(tgPath, name + ".TextGrid"))
     tier = tg.tierDict[tierName]
     
     for start, stop, label in tier.entryList:
@@ -48,7 +48,7 @@ def extractTGInfo(inputPath, outputPath, tierName):
             
         outputTxt = "\n".join(outputList)
         outputFN = join(outputPath, name + ".txt")
-        with codecs.open(outputFN, "w", encoding="utf-8") as fd:
+        with io.open(outputFN, "w", encoding="utf-8") as fd:
             fd.write(outputTxt)
 
 
@@ -71,7 +71,7 @@ def extractTranscript(featurePath, tierName):
         
         outputTxt = "\n".join(outputList)
         outputFN = join(outputPath, name + ".txt")
-        with codecs.open(outputFN, "w", encoding="utf-8") as fd:
+        with io.open(outputFN, "w", encoding="utf-8") as fd:
             fd.write(outputTxt)
 
 
@@ -88,5 +88,5 @@ def extractWords(tgPath, tierName, outputPath):
         
         outputTxt = "\n".join(outputList)
         outputFN = join(outputPath, name + ".txt")
-        with codecs.open(outputFN, "w", encoding="utf-8") as fd:
+        with io.open(outputFN, "w", encoding="utf-8") as fd:
             fd.write(outputTxt)

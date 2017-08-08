@@ -8,7 +8,7 @@ Created on Oct 15, 2014
 from distutils.core import setup
 import codecs
 setup(name='pyacoustics',
-      version='1.0.0',
+      version='1.0.1',
       author='Tim Mahrt',
       author_email='timmahrt@gmail.com',
       package_dir={'pyacoustics':'pyacoustics'},

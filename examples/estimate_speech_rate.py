@@ -53,7 +53,7 @@ def _addSyllableNucleiToTextgrids(wavPath, tgPath, tierName,
     # Add syllable nuclei to textgrids
     for name in utils.findFiles(wavPath, filterExt=".wav", stripExt=True):
         
-        tg = tgio.openTextGrid(join(tgPath, name + ".TextGrid"))
+        tg = tgio.openTextgrid(join(tgPath, name + ".TextGrid"))
         entryList = tg.tierDict[tierName].entryList
         startTimeList = [entry[0] for entry in entryList]
         nucleusSyllableList = uwe_sr.toAbsoluteTime(name, syllableNucleiPath,
@@ -72,7 +72,7 @@ def _addSyllableNucleiToTextgrids(wavPath, tgPath, tierName,
         tier = tgio.PointTier("Syllable Nuclei", entryList, 0, duration)
         
         tgFN = join(tgPath, name + ".TextGrid")
-        tg = tgio.openTextGrid(tgFN)
+        tg = tgio.openTextgrid(tgFN)
         tg.addTier(tier)
         tg.save(join(outputPath, name + ".TextGrid"))
         
@@ -97,7 +97,7 @@ def _calculateSyllablesPerSecondForIntervals(wavPath, tgPath, tierName,
     # Add syllable nuclei to textgrids
     for name in utils.findFiles(wavPath, filterExt=".wav", stripExt=True):
         
-        tg = tgio.openTextGrid(join(tgPath, name + ".TextGrid"))
+        tg = tgio.openTextgrid(join(tgPath, name + ".TextGrid"))
         entryList = tg.tierDict[tierName].entryList
         startTimeList = [entry[0] for entry in entryList]
         nucleusSyllableList = uwe_sr.toAbsoluteTime(name, syllableNucleiPath,
