@@ -34,12 +34,16 @@ class CountCorpus(object):
                 print("OOD Word: %s" % word)
                 count = outOfDictionaryValue
         
-        if normFunc is None:
-            freq = float(count) / self.totalCount
-        else:
-            freq = normFunc(count, self.totalCount)
-            
-        logFreq = math.log(freq)
+        try:
+            if normFunc is None:
+                freq = float(count) / self.totalCount
+            else:
+                freq = normFunc(count, self.totalCount)
+                
+            logFreq = math.log(freq)
+        except ValueError:
+            freq = ""
+            logFreq = ""
         
         return count, freq, logFreq
         
@@ -109,7 +113,7 @@ class SwitchboardTim(CountCorpus):
         
 class Buckeye(CountCorpus):
     
-    NUM_WORDS = 35009.0
+    NUM_WORDS = 282575.0 # Not including words that start with '['
     
     def __init__(self, buckeyeCounts):
         frequencyDict = loadCountList(buckeyeCounts)
