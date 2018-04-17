@@ -30,18 +30,22 @@ def loadWavFile(wavFN):
     return audioFrameList, params
 
 
-def resampleAudio(newSampleRate, inputPath):
+def resampleAudio(soxEXE, newSampleRate, inputPath, fn, outputPath=None):
+    '''
     
-    outputPath = join(inputPath, "resampled_wavs")
+    Mac: "/opt/local/bin/sox"
+    Windows: "C:\Program Files (x86)\sox-14-4-2\sox.exe"
+    '''
+    if outputPath is None:
+        outputPath = join(inputPath, "resampled_wavs")
     utils.makeDir(outputPath)
     
-    for fn in utils.findFiles(inputPath, filterExt=".wav"):
-        soxCmd = "%s %s -r %f %s rate -v 96k" % ("/opt/local/bin/sox",
-                                                 join(inputPath, fn),
-                                                 newSampleRate,
-                                                 join(outputPath, fn))
-        os.system(soxCmd)
-        
+    soxCmd = "%s %s -r %f %s rate -v 96k" % (soxEXE,
+                                             join(inputPath, fn),
+                                             newSampleRate,
+                                             join(outputPath, fn))
+    os.system(soxCmd)
+
 
 def getSerializedFileDuration(fn):
     name = os.path.splitext(fn)[0]
