@@ -40,7 +40,7 @@ class CountCorpus(object):
             else:
                 freq = normFunc(count, self.totalCount)
                 
-            logFreq = math.log(freq)
+            logFreq = math.log(float(count))
         except ValueError:
             freq = ""
             logFreq = ""
