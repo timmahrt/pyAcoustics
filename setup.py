@@ -5,16 +5,17 @@ Created on Oct 15, 2014
 
 @author: tmahrt
 '''
-from distutils.core import setup
-import codecs
+from setuptools import setup
+import io
 setup(name='pyacoustics',
       version='1.0.1',
       author='Tim Mahrt',
       author_email='timmahrt@gmail.com',
+      url='https://github.com/timmahrt/pyAcoustics',
       package_dir={'pyacoustics':'pyacoustics'},
       packages=[
-      			'pyacoustics',
-      			'pyacoustics.intensity_and_pitch',
+                'pyacoustics',
+                'pyacoustics.intensity_and_pitch',
                 'pyacoustics.signals',
                 'pyacoustics.speech_detection',
                 'pyacoustics.speech_rate',
@@ -22,8 +23,8 @@ setup(name='pyacoustics',
                 'pyacoustics.textgrids',
                 'pyacoustics.utilities',
                 ],
+      package_data={'pyacoustics': ['matlabScripts/detect_syllable_nuclei.m', ]},
       license='LICENSE',
       description="A collection of python scripts for extracting and analyzing acoustics from audio files.",
-      long_description=codecs.open('README.rst', 'r', encoding="utf-8").read(),
-#       install_requires=[], # No requirements! # requires 'from setuptools import setup'
+      long_description=io.open('README.rst', 'r', encoding="utf-8").read()
       )
