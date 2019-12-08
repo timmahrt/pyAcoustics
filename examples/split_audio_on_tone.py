@@ -53,7 +53,7 @@ def audiosplitOnTone(inputPath, fn, pitchPath, tgPath, subwavPath,
 
 
 if __name__ == "__main__":
-    _dataPath = "/Users/tmahrt/Dropbox/workspace/pyAcoustics/test/files"
+    _dataPath = "/Users/tmahrt/Dropbox/workspace/pyAcoustics/examples/files"
     _pitchPath = join(_dataPath, "split_on_tone_pitch")
     _tgPath = join(_dataPath, "split_on_tone_textgrids")
     _wavOutputPath = join(_dataPath, "split_on_tone_subwavs")

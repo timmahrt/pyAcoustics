@@ -68,7 +68,7 @@ def _addSyllableNucleiToTextgrids(wavPath, tgPath, tierName,
 
         entryList = [(timestamp, labelTemplate % i)
                      for i, timestamp in enumerate(flattenedSyllableList)]
-        print flattenedSyllableList
+        print(flattenedSyllableList)
         tier = tgio.PointTier("Syllable Nuclei", entryList, 0, duration)
         
         tgFN = join(tgPath, name + ".TextGrid")

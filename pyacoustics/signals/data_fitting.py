@@ -39,11 +39,11 @@ def getBimodalValley(data, numSamples=100, doplot=True):
     
     ncomp = 2  # Could be parameterized later if needed
     
-    clf = mixture.GMM(n_components=ncomp, covariance_type='full')
+    clf = mixture.GaussianMixture(n_components=ncomp, covariance_type='full')
     clf.fit([[item, ] for item in data])
     ml = clf.means_
     wl = clf.weights_
-    cl = clf.covars_
+    cl = clf.covariances_
     ms = [m[0] for m in ml]
     cs = [np.sqrt(c[0][0]) for c in cl]
     ws = [w for w in wl]

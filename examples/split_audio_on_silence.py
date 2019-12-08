@@ -126,7 +126,7 @@ if __name__ == "__main__":
     _numSteps = 5
     
     _fn = "introduction.wav"
-    _dataPath = join('/Users/tmahrt/Dropbox/workspace/pyAcoustics/test/files')
+    _dataPath = join('/Users/tmahrt/Dropbox/workspace/pyAcoustics/examples/files')
     _outputPath = join(_dataPath, "output_stepSize_0.1")
     _tgPath = join(_dataPath, "splitAudio_silence_stepSize_0.1")    
     _pitchPath = join(_dataPath, "pitch")
