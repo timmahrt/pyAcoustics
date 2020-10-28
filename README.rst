@@ -54,7 +54,7 @@ Ver 1.0 (June 7, 2015)
 
 
 Features as they are added
-================
+===========================
 
 Mask speech with speech shaped noise
 (March 21, 2016)
@@ -149,7 +149,7 @@ Tim Mahrt. PyAcoustics. https://github.com/timmahrt/pyAcoustics, 2016.
 
 
 Acknowledgements
-================
+=================
 
 PyAcoustics is an ongoing collection of code with contributions from a
 number of projects worked on over several years.  Development of various

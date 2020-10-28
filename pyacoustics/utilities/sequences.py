@@ -307,6 +307,9 @@ def invertIntervalList(entryList, minValue=0, maxValue=None):
     e.g. input [(5, 6), (10, 13), (14, 16)]
          output [(0, 5), (6, 10), (13, 14)]
     '''
+    if entryList == []:
+        return []
+
     newEntryList = []
     i = 0
     

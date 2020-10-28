@@ -36,7 +36,7 @@ def _homogenizeList(dataList, toneFrequency):
     return retDataList
 
 
-def splitFileOnTone(pitchList, pitchSampleFreq, toneFrequency,
+def splitFileOnTone(pitchList, timeStep, toneFrequency,
                     eventDurationThreshold):
     '''
     Splits files by pure tones
@@ -48,7 +48,7 @@ def splitFileOnTone(pitchList, pitchSampleFreq, toneFrequency,
     
     compressedList = sequences.compressList(codedPitchList)
     timeDict = sequences.compressedListTransform(compressedList,
-                                                 1 / float(pitchSampleFreq),
+                                                 2.0/timeStep,
                                                  eventDurationThreshold)
     
     # Fill in with empty lists if it didn't appear in the dataset

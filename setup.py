@@ -8,7 +8,7 @@ Created on Oct 15, 2014
 from setuptools import setup
 import io
 setup(name='pyacoustics',
-      version='1.0.2',
+      version='1.0.4',
       author='Tim Mahrt',
       author_email='timmahrt@gmail.com',
       url='https://github.com/timmahrt/pyAcoustics',
