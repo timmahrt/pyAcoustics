@@ -3,7 +3,7 @@ in this document, assume that the code is covered by the MIT license as stated b
 
 The MIT License (MIT)
 
-Copyright (c) 2015, 2016, 2017 Tim Mahrt
+Copyright (c) 2015, 2016, 2017, 2018, 2019, 2020 Tim Mahrt
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,8 @@ SOFTWARE.
 --------------------------
 
 The matlab scripts contained in the folder 'nucleus_detection_matlab' were
-written by Uwe Reichel.  They do not carry any license and are included here
-under the permission of the author.
+written by Uwe Reichel.  They are released here under the MIT license with
+Uwe Reichel's permission.
 
 --------------------------
 
