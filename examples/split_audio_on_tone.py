@@ -30,7 +30,8 @@ def audiosplitOnTone(inputPath, fn, pitchPath, tgPath, subwavPath,
                                                  praatEXE,
                                                  minPitch, maxPitch,
                                                  sampleStep=sampleStep,
-                                                 forceRegenerate=forceRegen)
+                                                 forceRegenerate=forceRegen,
+                                                 undefinedValue=0.0)
     # entry = (time, pitchVal, intVal)
     pitchList = [float(entry[1]) for entry in motherPIList]
     timeDict = split_on_tone.splitFileOnTone(pitchList,

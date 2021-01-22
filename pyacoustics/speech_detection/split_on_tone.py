@@ -48,7 +48,7 @@ def splitFileOnTone(pitchList, timeStep, toneFrequency,
     
     compressedList = sequences.compressList(codedPitchList)
     timeDict = sequences.compressedListTransform(compressedList,
-                                                 2.0/timeStep,
+                                                 1.0/timeStep,
                                                  eventDurationThreshold)
     
     # Fill in with empty lists if it didn't appear in the dataset
