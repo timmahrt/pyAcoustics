@@ -16,7 +16,7 @@ other task, the speech rate is calculated.
 
 from os.path import join
 
-from praatio import tgio
+from praatio import textgrid
 from praatio import praatio_scripts
 
 from pyacoustics.signals import audio_scripts
@@ -67,7 +67,9 @@ def _addSyllableNucleiToTextgrids(
     # Add syllable nuclei to textgrids
     for name in utils.findFiles(wavPath, filterExt=".wav", stripExt=True):
 
-        tg = tgio.openTextgrid(join(tgPath, name + ".TextGrid"))
+        tg = textgrid.openTextgrid(
+            join(tgPath, name + ".TextGrid"), includeEmptyIntervals=False
+        )
         entryList = tg.tierDict[tierName].entryList
         startTimeList = [entry[0] for entry in entryList]
         nucleusSyllableList = uwe_sr.toAbsoluteTime(
@@ -87,10 +89,10 @@ def _addSyllableNucleiToTextgrids(
             for i, timestamp in enumerate(flattenedSyllableList)
         ]
         print(flattenedSyllableList)
-        tier = tgio.PointTier("Syllable Nuclei", entryList, 0, duration)
+        tier = textgrid.PointTier("Syllable Nuclei", entryList, 0, duration)
 
         tgFN = join(tgPath, name + ".TextGrid")
-        tg = tgio.openTextgrid(tgFN)
+        tg = textgrid.openTextgrid(tgFN, includeEmptyIntervals=False)
         tg.addTier(tier)
         tg.save(join(outputPath, name + ".TextGrid"))
 
@@ -121,7 +123,9 @@ def _calculateSyllablesPerSecondForIntervals(
     # Add syllable nuclei to textgrids
     for name in utils.findFiles(wavPath, filterExt=".wav", stripExt=True):
 
-        tg = tgio.openTextgrid(join(tgPath, name + ".TextGrid"))
+        tg = textgrid.openTextgrid(
+            join(tgPath, name + ".TextGrid"), includeEmptyIntervals=False
+        )
         entryList = tg.tierDict[tierName].entryList
         startTimeList = [entry[0] for entry in entryList]
         nucleusSyllableList = uwe_sr.toAbsoluteTime(
