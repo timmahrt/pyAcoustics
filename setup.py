@@ -10,7 +10,8 @@ import io
 
 setup(
     name="pyacoustics",
-    version="1.0.7",
+    python_requires=">3.6.0",
+    version="2.0.0",
     author="Tim Mahrt",
     author_email="timmahrt@gmail.com",
     url="https://github.com/timmahrt/pyAcoustics",
@@ -31,7 +32,10 @@ setup(
         ]
     },
     license="LICENSE",
-    install_requires=["praatio ~= 4.1"],
+    install_requires=[
+        "praatio >= 5.0",
+        "typing_extensions",
+    ],
     description="A collection of python scripts for extracting and analyzing acoustics from audio files.",
     long_description=io.open("README.rst", "r", encoding="utf-8").read(),
 )

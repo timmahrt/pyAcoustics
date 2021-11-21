@@ -9,7 +9,7 @@ import unittest
 from pyacoustics.utilities import statistics
 
 
-class MedianTest(unittest.TestCase):
+class TestStatistics(unittest.TestCase):
 
     MY_LIST = [5, 1, 10, 13, 3, 17, 9, 17]
 
@@ -25,7 +25,3 @@ class MedianTest(unittest.TestCase):
         medianList = statistics.medianFilter(self.MY_LIST, 3, useEdgePadding=True)
         correctList = [5, 5, 10, 10, 13, 9, 17, 17]
         self.assertEqual(medianList, correctList)
-
-
-if __name__ == "__main__":
-    unittest.main()

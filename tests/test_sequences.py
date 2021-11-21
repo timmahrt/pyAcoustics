@@ -9,7 +9,7 @@ import unittest
 from pyacoustics.utilities import sequences
 
 
-class invertIntervalList(unittest.TestCase):
+class TestSequences(unittest.TestCase):
 
     LIST_A = [(5, 6), (10, 13), (14, 16)]
     LIST_B = [(0, 1), (5, 6), (10, 13), (14, 16)]
@@ -38,7 +38,3 @@ class invertIntervalList(unittest.TestCase):
         invertedList = sequences.invertIntervalList(self.LIST_A, 0, 20)
         twiceInvList = sequences.invertIntervalList(invertedList, 0, 20)
         self.assertEqual(self.LIST_A, twiceInvList)
-
-
-if __name__ == "__main__":
-    unittest.main()

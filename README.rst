@@ -138,6 +138,12 @@ See the example folders for a few real-world examples using this library.
     `Uwe Reichel <http://www.phonetik.uni-muenchen.de/~reichelu/>`_
     that estimates the location of syllable boundaries.
 
+Tests
+===============
+
+I run tests with the following command (this requires pytest and pytest-cov to be installed):
+
+`pytest --cov=pyacoustics tests/`
 
 Citing LMEDS
 ===============
