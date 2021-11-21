@@ -1,8 +1,8 @@
-'''
+"""
 Created on Apr 16, 2018
 
 @author: tmahrt
-'''
+"""
 
 import io
 from os.path import join
@@ -21,23 +21,24 @@ wordList = buckeye.frequencyDict.keys()
 wordList.sort()
 sumV = 0
 for word in wordList:
-    
+
     # Not including words that were tagged for any reason
-    if word[0] == '[':
+    if word[0] == "[":
         continue
-    
+
     sumV += buckeye.getFrequency(word, outOfDictionaryValue=0)[0]
-    
-    row = [word, ]
+
+    row = [
+        word,
+    ]
     for corpus in [buckeye, fischer, google, switchboard]:
         row.extend(corpus.getFrequency(word, outOfDictionaryValue=""))
-    
+
     rowTxt = ",".join([str(val) for val in row])
     outputList.append(rowTxt)
 
 outputTxt = u"\n".join(outputList)
-with io.open(outputFN, 'w') as fd:
+with io.open(outputFN, "w") as fd:
     fd.write(outputTxt)
-    
-print(sumV)
 
+print(sumV)

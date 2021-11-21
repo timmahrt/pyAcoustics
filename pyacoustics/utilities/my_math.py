@@ -1,8 +1,8 @@
-'''
+"""
 Created on Apr 3, 2015
 
 @author: tmahrt
-'''
+"""
 
 import math
 
@@ -15,7 +15,9 @@ def rms(intensityValues):
 
 def linspace(start, stop, n):
     if n == 1:
-        return [stop, ]
+        return [
+            stop,
+        ]
     h = (stop - start) / float(n - 1)
     return [start + h * i for i in range(n)]
 
