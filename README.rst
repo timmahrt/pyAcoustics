@@ -48,21 +48,10 @@ What can you do with this library?
 Major revisions
 ================
 
-Ver 1.0 (June 7, 2015)
+*Praatio uses semantic versioning (Major.Minor.Patch)*
 
-- first public release.
+Please view [CHANGELOG.md](https://github.com/timmahrt/pyAcoustics/blob/main/CHANGELOG.md) for version history.
 
-
-Features as they are added
-===========================
-
-Mask speech with speech shaped noise
-(March 21, 2016)
-
-Find syllable nuclei/estimate speech rate using Uwe Reichel's matlab code
-(July 29, 2015) 
-
-Find the valley bottom between peaks (July 7th, 2015)
 
 Requirements
 ================
@@ -91,9 +80,6 @@ My praatIO library is used extensively and can be downloaded
 
 Installation
 ================
-
-If you on Windows, you can use the installer found here (check that it is up to date though)
-`Windows installer <http://www.timmahrt.com/python_installers>`_
 
 PyAcoustics is on pypi and can be installed or upgraded from the command-line shell with pip like so::
 
@@ -138,14 +124,7 @@ See the example folders for a few real-world examples using this library.
     `Uwe Reichel <http://www.phonetik.uni-muenchen.de/~reichelu/>`_
     that estimates the location of syllable boundaries.
 
-Tests
-===============
-
-I run tests with the following command (this requires pytest and pytest-cov to be installed):
-
-`pytest --cov=pyacoustics tests/`
-
-Citing LMEDS
+Citing PyAcoustics
 ===============
 
 PyAcoustics is general purpose coding and doesn't need to be cited
