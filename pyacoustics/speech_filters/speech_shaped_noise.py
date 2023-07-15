@@ -1,4 +1,4 @@
-'''
+"""
 Created on Mar 18, 2016
 
 @author: timmahrt
@@ -29,7 +29,7 @@ Some guidelines:
 Requires scipy and numpy
 
 See the bottom of this file for an example usage.
-'''
+"""
 
 import os
 from os.path import join
@@ -84,7 +84,7 @@ def _dbspl(x, ac=False, offset=0.0):
     rms
     """
     x = np.asarray(x)
-    return 20. * np.log10(_rms(x, ac)) + float(offset)
+    return 20.0 * np.log10(_rms(x, ac)) + float(offset)
 
 
 def _read_wav_as_float(path):
@@ -102,7 +102,7 @@ def _read_wav_as_float(path):
         # Integer division here.  The '1.0' converts the numbers to float.
         return signal.T / (1.0 * np.abs(np.iinfo(signal.dtype).min))
     return signal.T
-    
+
 
 def _write_wav(fname, fs, x, normalize=False):
     """Writes floating point numpy array to 16 bit wavfile.
@@ -132,19 +132,19 @@ def _write_wav(fname, fs, x, normalize=False):
     """
     # Make sure that the channels are the second dimension
     fs = np.int(fs)
-    if not fname.endswith('.wav'):
-        fname += '.wav'
+    if not fname.endswith(".wav"):
+        fname += ".wav"
 
     if x.shape[0] <= 2:
         x = x.T
 
     if np.issubdtype(x.dtype, np.float) and normalize:
-        scaled = (x / np.max(np.abs(x)) * (2 ** 15 - 1))
+        scaled = x / np.max(np.abs(x)) * (2**15 - 1)
     elif np.issubdtype(x.dtype, np.float):
-        scaled = x * (2 ** 15 - 1)
+        scaled = x * (2**15 - 1)
     else:
         scaled = x
-    wavfile.write(fname, fs, scaled.astype('int16'))
+    wavfile.write(fname, fs, scaled.astype("int16"))
 
 
 def _rms(x, ac=False, axis=-1):
@@ -204,7 +204,7 @@ def _mix_noise(clean, noise, sent_level, snr=None):
     n_noise = len(noise)
     if n_noise > n_clean:
         start_idx = np.random.randint(n_noise - n_clean)
-        noise = noise[start_idx:start_idx + n_clean]
+        noise = noise[start_idx : start_idx + n_clean]
 
     if snr is not None:
         # Get speech level and set noise level accordingly
@@ -217,7 +217,7 @@ def _mix_noise(clean, noise, sent_level, snr=None):
 
     return clean, mix, noise
 
-        
+
 def _noise_from_signal(x, fs=40000, keep_env=False):
     """Create a noise with same spectrum as the input signal.
 
@@ -242,8 +242,7 @@ def _noise_from_signal(x, fs=40000, keep_env=False):
     n_fft = next_pow_2(n_x)
     X = fft.rfft(x, next_pow_2(n_fft))
     # Randomize phase.
-    noise_mag = np.abs(X) * np.exp(
-        2 * np.pi * 1j * np.random.random(X.shape[-1]))
+    noise_mag = np.abs(X) * np.exp(2 * np.pi * 1j * np.random.random(X.shape[-1]))
     noise = np.real(fft.irfft(noise_mag, n_fft))
     out = noise[:n_x]
 
@@ -259,7 +258,7 @@ def _noise_from_signal(x, fs=40000, keep_env=False):
 def next_pow_2(x):
     """Calculates the next power of 2 of a number."""
     return int(pow(2, np.ceil(np.log2(x))))
-    
+
 
 ###########################
 # end of pambox code
@@ -267,264 +266,274 @@ def next_pow_2(x):
 
 
 class NotListException(Exception):
-
     def __str__(self):
         return "Error.  First argument must be a list of file names."
 
 
 class InconsistentFramerateException(Exception):
-
     def __init__(self, wavFNList, framerateList):
         super(InconsistentFramerateException, self).__init__()
-        
+
         self.framerateDict = {}
-        
+
         framerateSet = list(set(framerateList))
         for framerate in framerateSet:
             self.framerateDict[framerate] = []
-        
+
         for wavFN, framerate in zip(wavFNList, framerateList):
             self.framerateDict[framerate].append(wavFN)
 
     def __str__(self):
-        
         outputStr = "Error.  All wave files must have the same framerate"
-        
+
         for framerate, fnList in self.framerateDict.items():
             outputStr += "\n%s: %s" % (framerate, repr(fnList))
-        
+
         return outputStr
 
 
 def _getFramerate(wavFN):
-    
     audiofile = wave.open(wavFN, "r")
     params = audiofile.getparams()
-    
+
     return params[2]
 
 
 def _getDuration(waveFN):
-    '''
+    """
     Returns the duration of a wav file (in seconds)
-    '''
+    """
     audiofile = wave.open(waveFN, "r")
-    
+
     params = audiofile.getparams()
     framerate = params[2]
     nframes = params[3]
-    
+
     duration = float(nframes) / framerate
     return duration
 
 
 def _getMatchFunc(pattern):
-    '''
+    """
     An unsophisticated pattern matching function
-    '''
-    
+    """
+
     # '#' Marks word boundaries, so if there is more than one we need to do
     #    something special to make sure we're not mis-representings them
-    assert(pattern.count('#') < 2)
+    assert pattern.count("#") < 2
 
     def startsWith(subStr, fullStr):
-        return fullStr[:len(subStr)] == subStr
-            
+        return fullStr[: len(subStr)] == subStr
+
     def endsWith(subStr, fullStr):
-        return fullStr[-1 * len(subStr):] == subStr
-    
+        return fullStr[-1 * len(subStr) :] == subStr
+
     def inStr(subStr, fullStr):
         return subStr in fullStr
 
     # Selection of the correct function
-    if pattern[0] == '#':
+    if pattern[0] == "#":
         pattern = pattern[1:]
         cmpFunc = startsWith
-        
-    elif pattern[-1] == '#':
+
+    elif pattern[-1] == "#":
         pattern = pattern[:-1]
         cmpFunc = endsWith
-        
+
     else:
         cmpFunc = inStr
-    
+
     return functools.partial(cmpFunc, pattern)
 
 
-def findFiles(path, filterPaths=False, filterExt=None, filterPattern=None,
-              skipIfNameInList=None, stripExt=False, addPath=False):
-    '''
+def findFiles(
+    path,
+    filterPaths=False,
+    filterExt=None,
+    filterPattern=None,
+    skipIfNameInList=None,
+    stripExt=False,
+    addPath=False,
+):
+    """
     The primary use is to find files in a folder spoken by the same speaker
-    
+
     Feed the input of findFiles into generateSpeechShapedNoise() as the first
     argument.
-    '''
+    """
     fnList = os.listdir(path)
-       
+
     if filterPaths is True:
-        fnList = [folderName for folderName in fnList
-                  if os.path.isdir(os.path.join(path, folderName))]
+        fnList = [
+            folderName
+            for folderName in fnList
+            if os.path.isdir(os.path.join(path, folderName))
+        ]
 
     if filterExt is not None:
-        splitFNList = [[fn, ] + list(os.path.splitext(fn)) for fn in fnList]
+        splitFNList = [
+            [
+                fn,
+            ]
+            + list(os.path.splitext(fn))
+            for fn in fnList
+        ]
         fnList = [fn for fn, name, ext in splitFNList if ext == filterExt]
-        
+
     if filterPattern is not None:
-        splitFNList = [[fn, ] + list(os.path.splitext(fn)) for fn in fnList]
+        splitFNList = [
+            [
+                fn,
+            ]
+            + list(os.path.splitext(fn))
+            for fn in fnList
+        ]
         matchFunc = _getMatchFunc(filterPattern)
         fnList = [fn for fn, name, ext in splitFNList if matchFunc(name)]
-    
+
     if skipIfNameInList is not None:
         targetNameList = [os.path.splitext(fn)[0] for fn in skipIfNameInList]
-        fnList = [fn for fn in fnList
-                  if os.path.splitext(fn)[0] not in targetNameList]
-    
+        fnList = [fn for fn in fnList if os.path.splitext(fn)[0] not in targetNameList]
+
     if stripExt is True:
         fnList = [os.path.splitext(fn)[0] for fn in fnList]
-        
+
     if addPath is True:
         fnList = [join(path, fn) for fn in fnList]
-    
+
     fnList.sort()
     return fnList
 
-    
+
 def generateNoise(inputFNList, outputFN, outputDuration=None):
-    '''
+    """
     Generates a file of random noise within the spectrum provided by the input
-    
+
     The input should contain at least 3 minutes of speech for best results.
     Silences can exist in with the speech.  Multiple files can be considered
     for one speech shaped noise generation.
-    
+
     With less than 3 minutes, the speech shaped noise might contain
     harmonic components.
-    
+
     The output will have the same duration as the input, but if you don't need
     such a long file, you can truncate the output.
-    '''
-    
+    """
+
     # Input must be a list
     if not isinstance(inputFNList, list):
         raise NotListException()
-    
+
     # Verify that all files have the same framerate
     framerateList = [_getFramerate(fn) for fn in inputFNList]
     framerate = framerateList[0]
     if not all([tmpFramerate == framerate for tmpFramerate in framerateList]):
         raise InconsistentFramerateException(inputFNList, framerateList)
-    
+
     outputPath = os.path.split(outputFN)[0]
     if not os.path.exists(outputPath):
         os.mkdir(outputPath)
-    
+
     # Append the frames across all audio files
     audioFrames = []
     for fn in inputFNList:
         audioFrames.extend(_read_wav_as_float(fn))
-    
+
     # Get the speech shaped noise
     # I'm not sure what the third argument does, but setting it
     # to True makes the output sound horrible in my experience.
-    noiseFrames = _noise_from_signal(audioFrames,
-                                     framerate,
-                                     False)
-    
+    noiseFrames = _noise_from_signal(audioFrames, framerate, False)
+
     # Crop the file if specified by parameter /outputDuration/
     if outputDuration is not None:
         duration = len(noiseFrames) / framerate
         if duration < outputDuration:
-            errMsg = ("Duration shorter than requested for file '%s'. "
-                      "Not cropping output.")
+            errMsg = (
+                "Duration shorter than requested for file '%s'. " "Not cropping output."
+            )
             print(errMsg % outputDuration)
         else:
-            noiseFrames = noiseFrames[:outputDuration * framerate]
-    
+            noiseFrames = noiseFrames[: outputDuration * framerate]
+
     _write_wav(outputFN, framerate, noiseFrames, True)
 
 
 def maskSpeech(inputFN, noiseFN, outputFN, snr):
-    '''
+    """
     Mask the input file with the noise file with level snr (dB).
-    
+
     noise file can be generated with generateSpeechShapedNoise()
-    
+
     Interesting snr values, that increasingly distort the speech,
     are 3 to -11.  See Aubanel et al 2014 for more information.
-    '''
-    
+    """
+
     outputPath = os.path.split(outputFN)[0]
     if not os.path.exists(outputPath):
         os.mkdir(outputPath)
-        
+
     audioFrames = _read_wav_as_float(inputFN)
     noiseFrames = _read_wav_as_float(noiseFN)
     clean_level = _dbspl(audioFrames)
     framerate = _getFramerate(inputFN)
     noiseFramerate = _getFramerate(inputFN)
-    
+
     if framerate != noiseFramerate:
-        InconsistentFramerateException([inputFN, noiseFN],
-                                       [framerate, noiseFramerate])
-    
-    outputFrames = _mix_noise(audioFrames[:],
-                              noiseFrames[:],
-                              clean_level,
-                              snr)[1]
-    
-    print outputFN
+        InconsistentFramerateException([inputFN, noiseFN], [framerate, noiseFramerate])
+
+    outputFrames = _mix_noise(audioFrames[:], noiseFrames[:], clean_level, snr)[1]
+
+    print(outputFN)
     _write_wav(outputFN, framerate, outputFrames, True)
 
-    
-def batchMaskSpeakerData(fnList, noiseProfileFN, outputPath, snrList,
-                         regenerateNoiseProfile=True):
-    '''
+
+def batchMaskSpeakerData(
+    fnList, noiseProfileFN, outputPath, snrList, regenerateNoiseProfile=True
+):
+    """
     Given a set of speech from a single speaker, mask each file with noise
-    
+
     Create the speech shaped noise by combining all the speech files.
-    
+
     This is a convenience function that combines the functionality of
     generateNoise() and maskSpeech()
-    '''
+    """
 
     if not os.path.exists(outputPath):
         os.mkdir(outputPath)
-    
+
     # Generate the noise profile
     if regenerateNoiseProfile is True or not os.path.exists(noiseProfileFN):
         generateNoise(fnList, noiseProfileFN)
-    
+
     # Mask the speech files
     for snr in snrList:
         snrOutputPath = join(outputPath, repr(snr))
         if not os.path.exists(snrOutputPath):
             os.mkdir(snrOutputPath)
-        
+
         for fnFullPath in fnList:
             fn = os.path.split(fnFullPath)[1]
-            maskSpeech(fnFullPath,
-                       noiseProfileFN,
-                       join(snrOutputPath, fn),
-                       snr)
+            maskSpeech(fnFullPath, noiseProfileFN, join(snrOutputPath, fn), snr)
 
 
 if __name__ == "__main__":
-
     # Example usage
-    _inputPath = (r"C:\Users\Tim\Desktop\cleaned_wavs")
+    _inputPath = r"C:\Users\Tim\Desktop\cleaned_wavs"
 
     _noiseFN = r"C:\Users\Tim\Desktop\noise_profiles\amelia_ssn.wav"
     _outputPath = r"C:\Users\Tim\Desktop\noise_filtered_speech"
-    
+
     # You can easily filter each audio file with different snrs by using this
     # list.  Each will be output to an appropriately labeled subfolder of
     # the output path
-    _snrList = [-3, ]
-    
+    _snrList = [
+        -3,
+    ]
+
     # You can manually create a list or use this search function to find
     # all of the files produced by the same speaker which you want to
     # create a speech shaped noise for and which you subsequently want
     # to mask using that noise.
     _fnList = findFiles(_inputPath, filterExt=".wav", addPath=True)
     batchMaskSpeakerData(_fnList, _noiseFN, _outputPath, _snrList)
-
