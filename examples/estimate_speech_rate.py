@@ -94,7 +94,11 @@ def _addSyllableNucleiToTextgrids(
         tgFN = join(tgPath, name + ".TextGrid")
         tg = textgrid.openTextgrid(tgFN, includeEmptyIntervals=False)
         tg.addTier(tier)
-        tg.save(join(outputPath, name + ".TextGrid"))
+        tg.save(
+            join(outputPath, name + ".TextGrid"),
+            format="short_textgrid",
+            includeBlankSpaces=True,
+        )
 
 
 def _calculateSyllablesPerSecond(wavPath, syllableNucleiPath):

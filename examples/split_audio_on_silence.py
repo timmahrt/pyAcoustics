@@ -119,7 +119,11 @@ def audiosplitSilence(
     duration = audio_scripts.getSoundFileDuration(join(inputPath, fn))
     tier = textgrid.IntervalTier("speech_tier", entryList, 0, duration)
     tg.addTier(tier)
-    tg.save(join(tgPath, name + ".TextGrid"))
+    tg.save(
+        join(tgPath, name + ".TextGrid"),
+        format="short_textgrid",
+        includeBlankSpaces=True,
+    )
 
     if generateWavs is True:
         for i, entry in enumerate(entryList):

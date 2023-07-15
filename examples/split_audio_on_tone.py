@@ -58,7 +58,11 @@ def audiosplitOnTone(
         entryList = timeDict[key]
         tier = textgrid.IntervalTier(key, entryList, 0, duration)
         tg.addTier(tier)
-    tg.save(join(tgPath, name + ".TextGrid"))
+    tg.save(
+        join(tgPath, name + ".TextGrid"),
+        format="short_textgrid",
+        includeBlankSpaces=True,
+    )
 
     # Output audio portions between tones
     if generateWavs:

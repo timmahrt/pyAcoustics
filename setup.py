@@ -33,7 +33,7 @@ setup(
     },
     license="LICENSE",
     install_requires=[
-        "praatio >= 5.0",
+        "praatio ~= 6.0",
         "typing_extensions",
     ],
     description="A collection of python scripts for extracting and analyzing acoustics from audio files.",

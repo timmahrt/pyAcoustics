@@ -21,7 +21,7 @@ def outputTextgrid(outputFN, duration, entryList, tierName):
 
     tg = textgrid.Textgrid()
     tg.addTier(tierSpeech)
-    tg.save(outputFN)
+    tg.save(outputFN, format="short_textgrid", includeBlankSpaces=True)
 
 
 def outputStereoTextgrid(
@@ -59,4 +59,4 @@ def outputStereoTextgrid(
     outputTG.addTier(leftTier)
     outputTG.addTier(rightTier)
 
-    outputTG.save(outputFN)
+    outputTG.save(outputFN, format="short_textgrid", includeBlankSpaces=True)

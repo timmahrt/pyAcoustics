@@ -50,7 +50,7 @@ def correctTextgridTimes(tgPath, threshold):
 
                     phoneTier.entryList[i] = (start, end, phone)
 
-        tg.save(join(outputPath, fn))
+        tg.save(join(outputPath, fn), format="short_textgrid", includeBlankSpaces=True)
 
 
 def syllabifyTextgrids(tgPath, islePath):
@@ -78,7 +78,9 @@ def syllabifyTextgrids(tgPath, islePath):
         #         outputTG.addTier(syllableTG.tierDict["syllable"])
         outputTG.addTier(syllableTG.tierDict["tonic"])
 
-        outputTG.save(join(outputPath, fn))
+        outputTG.save(
+            join(outputPath, fn), format="short_textgrid", includeBlankSpaces=True
+        )
 
 
 if __name__ == "__main__":
