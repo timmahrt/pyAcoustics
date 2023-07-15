@@ -7,6 +7,7 @@ Created on Jul 6, 2015
 from sklearn import mixture
 
 from scipy import stats
+from scipy.stats import norm
 import matplotlib.pyplot as plot
 import matplotlib.mlab
 import numpy as np
@@ -64,9 +65,9 @@ def getBimodalValley(data, numSamples=100, doplot=True):
 
     # Plot result if requested
     if doplot is True:
-        histo = plot.hist(data, numSamples, normed=True)
+        histo = plot.hist(data, numSamples)
         for w, m, c in zip(ws, ms, cs):
-            normedPDF = matplotlib.mlab.normpdf(histo[1], m, np.sqrt(c))
+            normedPDF = norm.pdf(histo[1], m, np.sqrt(c))
             plot.plot(histo[1], w * normedPDF, linewidth=3)
         plot.plot(pdfX, pdfY, linewidth=2)
         plot.axvline(minX)
