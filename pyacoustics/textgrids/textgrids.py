@@ -32,11 +32,9 @@ def _navigateTGs(tgPath, name, tierName):
 
 
 def extractTGInfo(inputPath, outputPath, tierName):
-
     utils.makeDir(outputPath)
 
     for name in utils.findFiles(inputPath, filterExt=".TextGrid", stripExt=True):
-
         if os.path.exists(join(outputPath, name + ".txt")):
             continue
         print(name)
@@ -62,7 +60,6 @@ def extractTranscript(featurePath, tierName):
     utils.makeDir(outputPath)
 
     for name in utils.findFiles(tgPath, filterExt=".TextGrid", stripExt=True):
-
         outputList = []
         for entry in _navigateTGs(tgPath, name, tierName):
             label = entry[2]
@@ -75,7 +72,6 @@ def extractTranscript(featurePath, tierName):
 
 
 def extractWords(tgPath, tierName, outputPath):
-
     utils.makeDir(outputPath)
 
     for name in utils.findFiles(tgPath, filterExt=".TextGrid", stripExt=True):

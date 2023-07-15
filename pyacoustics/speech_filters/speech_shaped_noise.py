@@ -139,9 +139,9 @@ def _write_wav(fname, fs, x, normalize=False):
         x = x.T
 
     if np.issubdtype(x.dtype, np.float) and normalize:
-        scaled = x / np.max(np.abs(x)) * (2 ** 15 - 1)
+        scaled = x / np.max(np.abs(x)) * (2**15 - 1)
     elif np.issubdtype(x.dtype, np.float):
-        scaled = x * (2 ** 15 - 1)
+        scaled = x * (2**15 - 1)
     else:
         scaled = x
     wavfile.write(fname, fs, scaled.astype("int16"))
@@ -284,7 +284,6 @@ class InconsistentFramerateException(Exception):
             self.framerateDict[framerate].append(wavFN)
 
     def __str__(self):
-
         outputStr = "Error.  All wave files must have the same framerate"
 
         for framerate, fnList in self.framerateDict.items():
@@ -294,7 +293,6 @@ class InconsistentFramerateException(Exception):
 
 
 def _getFramerate(wavFN):
-
     audiofile = wave.open(wavFN, "r")
     params = audiofile.getparams()
 
@@ -520,7 +518,6 @@ def batchMaskSpeakerData(
 
 
 if __name__ == "__main__":
-
     # Example usage
     _inputPath = r"C:\Users\Tim\Desktop\cleaned_wavs"
 

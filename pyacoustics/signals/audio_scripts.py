@@ -15,7 +15,6 @@ from pyacoustics.utilities import utils
 
 
 def loadWavFile(wavFN):
-
     sampWidthDict = {1: "b", 2: "h", 4: "i", 8: "q"}
     audiofile = wave.open(wavFN, "r")
 
@@ -91,7 +90,6 @@ def getParams(fn):
 
 
 def reduceToSingleChannel(fn, outputFN, leftFactor=1, rightFactor=0):
-
     audiofile = wave.open(fn, "r")
 
     params = audiofile.getparams()
@@ -113,7 +111,6 @@ def reduceToSingleChannel(fn, outputFN, leftFactor=1, rightFactor=0):
 
 
 def modifySampleWidth(fn, outputFN, newSampleWidth):
-
     sampWidthDict = {1: "b", 2: "h", 4: "i", 8: "q"}
 
     audiofile = wave.open(fn, "r")
@@ -177,7 +174,6 @@ def monoToStereo(fnL, fnR, outputFN, lfactor=1.0, rfactor=1.0):
 
 
 def splitStereoAudio(path, fn, outputPath=None):
-
     if outputPath is None:
         outputPath = join(path, "split_audio")
 
@@ -201,7 +197,6 @@ def splitStereoAudio(path, fn, outputPath=None):
         (1, 0, leftOutputFN),
         (0, 1, rightOutputFN),
     ):
-
         monoAudioFrames = audioop.tomono(
             audioFrames, sampwidth, leftFactor, rightFactor
         )
@@ -238,7 +233,6 @@ def getSubwav(fn, startT, endT, singleChannelFlag):
 
 
 def extractSubwav(fn, outputFN, startT, endT, singleChannelFlag):
-
     audiofile = wave.open(fn, "r")
     params = audiofile.getparams()
     nchannels = params[0]

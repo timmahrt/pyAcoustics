@@ -61,7 +61,6 @@ def findFiles(
     skipIfNameInList=None,
     stripExt=False,
 ):
-
     fnList = os.listdir(path)
 
     if filterPaths is True:
@@ -126,7 +125,6 @@ def openCSV(path, fn, valueIndex=None, encoding="utf-8"):
 
 
 def changeFileType(path, fromExt, toExt):
-
     if fromExt[0] != ".":
         fromExt = "." + fromExt
     if toExt[0] != ".":
@@ -144,7 +142,6 @@ def makeDir(path):
 
 
 def extractLines(path, matchStr, outputDir="output"):
-
     outputPath = join(path, outputDir)
     makeDir(outputPath)
 
@@ -213,7 +210,6 @@ def divide(numerator, denominator, zeroValue):
 
 
 def safeZip(listOfLists, enforceLength):
-
     if enforceLength is True:
         length = len(listOfLists[0])
         assert all([length == len(subList) for subList in listOfLists])

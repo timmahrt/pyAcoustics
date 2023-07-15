@@ -38,7 +38,6 @@ def extractPitch(fnFullPath, minPitch, maxPitch):
 
     pitchList = []
     for value in output:
-
         value = value[0]
 
         if value == 0:
@@ -49,7 +48,6 @@ def extractPitch(fnFullPath, minPitch, maxPitch):
 
 
 def getPitchAtTime(pitchList, startTime, endTime):
-
     startIndex = int(startTime * SAMPLE_FREQ)
     endIndex = int(endTime * SAMPLE_FREQ)
 
@@ -57,7 +55,6 @@ def getPitchAtTime(pitchList, startTime, endTime):
 
 
 if __name__ == "__main__":
-
     path = "/Users/tmahrt/Desktop/fire_new_audio_test"
     for name in utils.findFiles(path, filterExt=".wav", stripExt=True):
         tmpPitchList = extractPitch(join(path, name + ".wav"), 75, 450)

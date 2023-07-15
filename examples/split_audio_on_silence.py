@@ -99,7 +99,6 @@ def audiosplitSilence(
 
     # Filter out quieter sounds if necessary
     if numSegmentsToExtract is not None:
-
         # Get the rms energy of each non-silent region
         rmsEntryList = []
         for i, entry in enumerate(entryList):

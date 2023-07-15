@@ -8,7 +8,7 @@ import math
 
 
 def rms(intensityValues):
-    intensityValues = [val ** 2 for val in intensityValues]
+    intensityValues = [val**2 for val in intensityValues]
     meanVal = sum(intensityValues) / len(intensityValues)
     return math.sqrt(meanVal)
 

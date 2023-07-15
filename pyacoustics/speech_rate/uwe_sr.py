@@ -63,7 +63,6 @@ def toAbsoluteTime(namePrefix, matlabOutputPath, startTimeList):
 
 
 def uweSyllableCountForInterval(startTime, stopTime, nucleiCenterList):
-
     countList = [
         timestamp
         for timestamp in nucleiCenterList

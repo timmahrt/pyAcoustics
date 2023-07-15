@@ -12,7 +12,6 @@ from pyacoustics.utilities import utils
 
 
 def toWords(featurePath, outputPath):
-
     utils.makeDir(outputPath)
 
     transcriptPath = join(featurePath, "txt")

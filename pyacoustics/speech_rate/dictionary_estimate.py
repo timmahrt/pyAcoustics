@@ -12,11 +12,9 @@ from pysle import isletool
 
 
 def percentInside(startTime, endTime, cmprStartTime, cmprEndTime):
-
     if float(startTime) <= float(cmprEndTime) and float(endTime) >= float(
         cmprStartTime
     ):
-
         leftEdge = cmprStartTime - startTime
         rightEdge = endTime - cmprEndTime
 
@@ -35,7 +33,6 @@ def percentInside(startTime, endTime, cmprStartTime, cmprEndTime):
 
 
 def manualPhoneCount(tgInfoPath, isleFN, outputPath, skipList=None):
-
     if skipList is None:
         skipList = []
 
@@ -47,7 +44,6 @@ def manualPhoneCount(tgInfoPath, isleFN, outputPath, skipList=None):
     for fn in utils.findFiles(
         tgInfoPath, filterExt=".txt", skipIfNameInList=existFNList
     ):
-
         if os.path.exists(join(outputPath, fn)):
             continue
         print(fn)
@@ -72,12 +68,10 @@ def manualPhoneCount(tgInfoPath, isleFN, outputPath, skipList=None):
 
 
 def manualPhoneCountForEpochs(manualCountsPath, tgInfoPath, epochPath, outputPath):
-
     utils.makeDir(outputPath)
 
     skipList = utils.findFiles(outputPath, filterExt=".txt")
     for fn in utils.findFiles(tgInfoPath, filterExt=".txt", skipIfNameInList=skipList):
-
         epochList = utils.openCSV(epochPath, fn)
         tgInfo = utils.openCSV(tgInfoPath, fn)
         manualCounts = utils.openCSV(manualCountsPath, fn)

@@ -23,7 +23,6 @@ def findNextSpeaker(
     i = 0
     currentSequenceNum = 0
     while currentSequenceNum < numSteps:
-
         # Stop analyzing once we've reached the end of this interval
         currentTime = startTime + i * stepSize
         nextTime = startTime + ((i + 1) * stepSize)
@@ -98,7 +97,6 @@ def assignAudioEvents(
     stepSize,
     speakerNumSteps,
 ):
-
     findLeft = True
     leftEntryList = []
     rightEntryList = []
@@ -130,7 +128,6 @@ def assignAudioEvents(
             findLeft = not findLeft
 
     except common.EndOfAudioData:  # Stop processing
-
         if analyzeStop - startTime > stepSize * speakerNumSteps:
             finalEntry = (startTime, analyzeStop)
             if findLeft:
@@ -150,7 +147,6 @@ def autosegmentStereoAudio(
     stepSize,
     speakerNumSteps,
 ):
-
     overlapThreshold = 0
     overlapCheck = lambda entry, entryList: [
         not common.overlapCheck(entry, cmprEntry, overlapThreshold)
@@ -160,13 +156,11 @@ def autosegmentStereoAudio(
     # First add all of the entries with no overlap
     newLeftEntryList = []
     for leftEntry in leftEntryList:
-
         if all(overlapCheck(leftEntry, rightEntryList)):
             newLeftEntryList.append(leftEntry)
 
     newRightEntryList = []
     for rightEntry in rightEntryList:
-
         if all(overlapCheck(rightEntry, leftEntryList)):
             newRightEntryList.append(rightEntry)
 
@@ -176,7 +170,6 @@ def autosegmentStereoAudio(
     # segments between the right and left channels.
     i = 0
     while i < len(leftEntryList):
-
         # Check if there are any segments in the right channel that overlap
         # with the current segment in the left channel.  If not, move to
         # the next segment.

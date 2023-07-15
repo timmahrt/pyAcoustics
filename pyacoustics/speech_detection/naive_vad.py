@@ -21,7 +21,6 @@ def _findNextEvent(
     i = 0
     currentSequenceNum = 0
     while currentSequenceNum < numSteps:
-
         currentTime = startTime + i * stepSize
         nextTime = startTime + (i + 1) * stepSize
 
@@ -50,7 +49,6 @@ def _findNextEvent(
 def naiveVAD(
     sampleList, silenceThreshold, sampleFreq, stepSize, numSteps, startTime=0.0
 ):
-
     endTime = _findNextEvent(
         sampleList,
         startTime,
@@ -66,7 +64,6 @@ def naiveVAD(
     entryList = []
     try:
         while True:
-
             startTime = _findNextEvent(
                 sampleList,
                 endTime,

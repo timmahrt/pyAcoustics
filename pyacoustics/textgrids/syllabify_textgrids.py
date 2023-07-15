@@ -16,7 +16,6 @@ from pyacoustics.utilities import utils
 
 
 def correctTextgridTimes(tgPath, threshold):
-
     # Are x and y unique but very very similar
     withinThreshold = lambda x, y: (abs(x - y) < threshold) and (x != y)
 
@@ -30,11 +29,8 @@ def correctTextgridTimes(tgPath, threshold):
         phoneTier = tg.tierDict["phones"]
 
         for wordEntry in wordTier.entryList:
-
             for i, phoneEntry in enumerate(phoneTier.entryList):
-
                 if textgrid.intervalOverlapCheck(wordEntry, phoneEntry):
-
                     start = phoneEntry[0]
                     end = phoneEntry[1]
                     phone = phoneEntry[2]
@@ -54,7 +50,6 @@ def correctTextgridTimes(tgPath, threshold):
 
 
 def syllabifyTextgrids(tgPath, islePath):
-
     isleDict = isletool.LexicalTool(islePath)
 
     outputPath = join(tgPath, "syllabifiedTGs")
@@ -62,7 +57,6 @@ def syllabifyTextgrids(tgPath, islePath):
     skipLabelList = ["<VOCNOISE>", "xx", "<SIL>", "{B_TRANS}", "{E_TRANS}"]
 
     for fn in utils.findFiles(tgPath, filterExt=".TextGrid"):
-
         if os.path.exists(join(outputPath, fn)):
             continue
 

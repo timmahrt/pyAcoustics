@@ -63,17 +63,15 @@ class CountCorpus(object):
 
 
 class GoogleUnigram(CountCorpus):
-
     NUM_WORDS = 1024908267229.0
 
     def __init__(self, googleUnigram):
-
         # Load the corpus data
         frequencyDict = {}
         with open(googleUnigram, "r") as fd:
             data = fd.read()
         dataList = data.split()
-        for (word, count) in zip(
+        for word, count in zip(
             islice(dataList, 0, None, 2), islice(dataList, 1, None, 2)
         ):
             frequencyDict[word] = count
@@ -82,11 +80,9 @@ class GoogleUnigram(CountCorpus):
 
 
 class Switchboard(CountCorpus):
-
     NUM_WORDS = 1456224.0
 
     def __init__(self, switchboardCounts):
-
         # Load the corpus
         frequencyDict = {}
         with open(switchboardCounts, "r") as fd:
@@ -107,7 +103,6 @@ class Switchboard(CountCorpus):
 
 
 class SwitchboardTim(CountCorpus):
-
     NUM_WORDS = 1464017.0
 
     def __init__(self, switchboardCounts):
@@ -116,7 +111,6 @@ class SwitchboardTim(CountCorpus):
 
 
 class Buckeye(CountCorpus):
-
     NUM_WORDS = 282575.0  # Not including words that start with '['
 
     def __init__(self, buckeyeCounts):
@@ -125,7 +119,6 @@ class Buckeye(CountCorpus):
 
 
 class Fischer(CountCorpus):
-
     NUM_WORDS = 21025946.0
 
     def __init__(self, fischerCounts):
@@ -134,7 +127,6 @@ class Fischer(CountCorpus):
 
 
 class Crea(CountCorpus):
-
     NUM_WORDS = 152554665
 
     def __init__(self, creaCounts):
@@ -143,7 +135,6 @@ class Crea(CountCorpus):
 
 
 class FrenchCorpus(CountCorpus):
-
     NUM_WORDS = None
 
     def __init__(self, frenchCounts):
@@ -158,7 +149,6 @@ def calcWordsPerMillion(count, totalCount):
 
 
 def loadFrenchList(fnFullPath, outputFullPath):
-
     with io.open(fnFullPath, "r", encoding="utf-8") as fd:
         data = fd.read()
     frequencyDict = {}
@@ -199,7 +189,6 @@ def loadCountList(fnFullPath):
 
 
 def findFrequenciesForWordLists(featurePath, countObj, frequencyNormFunc):
-
     frequencyPath = join(featurePath, "frequency")
     utils.makeDir(frequencyPath)
 

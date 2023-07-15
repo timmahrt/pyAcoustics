@@ -57,7 +57,6 @@ def compressedListTransform(compressedList, timeStep, timeThreshold=None):
     countDict = {}
     lastGoodLabel = None
     for label, start, end in compressedList:
-
         countDict.setdefault(label, 0)
         returnDict.setdefault(label, [])
 
@@ -68,7 +67,6 @@ def compressedListTransform(compressedList, timeStep, timeThreshold=None):
         # if it is too short (noise tolerance)
         tmpDuration = (end - start) * timeStep
         if timeThreshold is not None and tmpDuration < timeThreshold:
-
             # If the very first entry is less than 0.3 seconds long
             if lastGoodLabel is not None and returnDict[lastGoodLabel] != []:
                 returnDict[lastGoodLabel][-1][1] = endTime
@@ -220,7 +218,6 @@ def subsequenceGenerator(dataList, chunkSize, sampleFunc, stepSizeFlag):
     finalIndex = 0
     doneIterating = False
     while not doneIterating:
-
         subSequence, subSequenceIndices, sampledLen = sampleFunc(
             dataList, controlPoint, chunkSize
         )
@@ -242,7 +239,6 @@ def subsequenceGenerator(dataList, chunkSize, sampleFunc, stepSizeFlag):
         controlPoint += stepSize
 
         if stepSizeFlag == DO_SAMPLE_GATED:
-
             if sampleFunc == sampleMiddle:
                 region = subSequenceIndices[int((chunkSize - 1) / 2.0) : -1]
             elif sampleFunc == sampleLeft:
@@ -269,7 +265,6 @@ def interp(start, stop, n):
 # http://stackoverflow.com/questions/10084436/generating-evenly-distributed-
 # multiples-samples-within-a-range
 def getEvenlySpacedSteps(start, end, n):
-
     assert end + 1 - start >= n
 
     # The usual case

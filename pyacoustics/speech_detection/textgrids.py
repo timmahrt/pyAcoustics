@@ -11,7 +11,6 @@ from praatio import textgrid
 
 
 def outputTextgrid(outputFN, duration, entryList, tierName):
-
     # Give all entries a label indicating their order of occurrence
     entryList.sort()
     newEntryList = [(entry[0], entry[1], str(i)) for i, entry in enumerate(entryList)]
@@ -27,7 +26,6 @@ def outputTextgrid(outputFN, duration, entryList, tierName):
 def outputStereoTextgrid(
     outputFN, duration, leftEntryList, rightEntryList, leftChannelName, rightChannelName
 ):
-
     # Give all entries a label indicating their order of occurrence
     leftEntryList.sort()
     newLeftEntryList = [

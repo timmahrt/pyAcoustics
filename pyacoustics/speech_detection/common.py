@@ -40,7 +40,7 @@ def openAudioFile(fn):
 
 
 def rms(audioFrameList):
-    audioFrameList = [val ** 2 for val in audioFrameList]
+    audioFrameList = [val**2 for val in audioFrameList]
     meanVal = sum(audioFrameList) / len(audioFrameList)
     return math.sqrt(meanVal)
 
@@ -65,7 +65,6 @@ def overlapCheck(interval, cmprInterval, percentThreshold=0):
 
 
 def getMinMaxAmplitude(wavFN, stepSize, entryList=None):
-
     audiofile = openAudioFile(wavFN)[0]
 
     # By default, find the min and max amplitude for the whole file
@@ -92,7 +91,6 @@ def getMinMaxAmplitude(wavFN, stepSize, entryList=None):
 
 
 def rmsNextFrames(audiofile, stepSize, normMinVal=None, normMaxVal=None):
-
     params = audiofile.getparams()
     sampwidth, framerate = params[1], params[2]
 
@@ -114,10 +112,8 @@ def rmsNextFrames(audiofile, stepSize, normMinVal=None, normMaxVal=None):
 
 
 def mergeAdjacentEntries(entryList):
-
     i = 0
     while i < len(entryList) - 1:
-
         if entryList[i][1] == entryList[i + 1][0]:
             startEntry = entryList.pop(i)
             nextEntry = entryList.pop(i)
@@ -130,7 +126,6 @@ def mergeAdjacentEntries(entryList):
 
 
 def cropUnusedPortion(entry, start, stop):
-
     retEntryList = []
 
     if entry[0] < start:

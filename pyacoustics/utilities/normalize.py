@@ -70,7 +70,7 @@ def syntagmaticNormalization(sampleIndexList, dataList, contextList):
             dataList[i],
         ]
 
-        for (incr, tmpContextList) in [
+        for incr, tmpContextList in [
             (-1, negativeContextList[:]),
             (1, positiveContextList[:]),
         ]:

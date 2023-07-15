@@ -24,7 +24,6 @@ def audiosplitOnTone(
     forceRegen,
     generateWavs=False,
 ):
-
     utils.makeDir(pitchPath)
     utils.makeDir(tgPath)
     utils.makeDir(subwavPath)

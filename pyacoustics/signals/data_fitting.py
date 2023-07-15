@@ -13,7 +13,6 @@ import numpy as np
 
 
 def getPDF(ddata, numSamples=50, minV=None, maxV=None):
-
     pdf = stats.gaussian_kde(ddata)
 
     if minV is None:

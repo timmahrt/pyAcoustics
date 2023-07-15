@@ -44,7 +44,6 @@ def _runSpeechRateEstimateOnIntervals(
     printCmd=True,
     outputTGFlag=False,
 ):
-
     utils.makeDir(wavTmpPath)
     # Split audio files into subsections based on textgrid intervals
     for name in utils.findFiles(wavPath, filterExt=".wav", stripExt=True):
@@ -66,7 +65,6 @@ def _addSyllableNucleiToTextgrids(
 ):
     # Add syllable nuclei to textgrids
     for name in utils.findFiles(wavPath, filterExt=".wav", stripExt=True):
-
         tg = textgrid.openTextgrid(
             join(tgPath, name + ".TextGrid"), includeEmptyIntervals=False
         )
@@ -102,7 +100,6 @@ def _addSyllableNucleiToTextgrids(
 
 
 def _calculateSyllablesPerSecond(wavPath, syllableNucleiPath):
-
     for name in utils.findFiles(wavPath, filterExt=".wav", stripExt=True):
         nucleusSyllableList = uwe_sr.toAbsoluteTime(
             name,
@@ -126,7 +123,6 @@ def _calculateSyllablesPerSecondForIntervals(
 ):
     # Add syllable nuclei to textgrids
     for name in utils.findFiles(wavPath, filterExt=".wav", stripExt=True):
-
         tg = textgrid.openTextgrid(
             join(tgPath, name + ".TextGrid"), includeEmptyIntervals=False
         )
@@ -162,7 +158,6 @@ def markupTextgridWithSyllableNuclei(
     printCmd=True,
     outputTGFlag=False,
 ):
-
     utils.makeDir(outputPath)
 
     # This can be commented out and instead, you can run the code directly
@@ -191,7 +186,6 @@ def markupTextgridWithSyllableNuclei(
 def getSpeechRateForIntervals(
     wavPath, syllableNucleiPath, matlabEXE, matlabScriptsPath, printCmd=True
 ):
-
     # This can be commented out and instead, you can run the code directly
     # from matlab, then you can start directly from the next line
     _runSpeechRateEstimate(
@@ -202,7 +196,6 @@ def getSpeechRateForIntervals(
 
 
 if __name__ == "__main__":
-
     _rootDir = "/Users/tmahrt/Dropbox/workspace/pyAcoustics/examples/files"
     _wavPath = _rootDir
     _syllableNucleiPath = join(_rootDir, "syllableNuclei_portions")

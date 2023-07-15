@@ -28,7 +28,6 @@ def intensityMorph(
     coreChunkSize,
     plotFlag,
 ):
-
     fromDataTupleList = common.getIntervals(fromWavTGFN, tierName)
     toDataTupleList = common.getIntervals(toWavTGFN, tierName)
 
@@ -56,7 +55,6 @@ def _intensityMorph(
     plotFlag,
     outputName=None,
 ):
-
     if outputName is None:
         outputName = os.path.splitext(fromWavFN)[0] + "_int"
 
@@ -75,7 +73,6 @@ def _intensityMorph(
     toParams = audio_scripts.getParams(toWavFN)
 
     for fromTuple, toTuple in zip(fromDataTupleList, toDataTupleList):
-
         fromStart, fromEnd = fromTuple[:2]
         toStart, toEnd = toTuple[:2]
 
@@ -97,7 +94,6 @@ def _intensityMorph(
     ]
     tmpChunkSizeList = [factor[1] for factor in normFactorList]
     for i in xrange(numSteps):
-
         outputFN = "%s_s%d_%d_%d.wav" % (outputName, coreChunkSize, numSteps - 1, i)
 
         tmpNormFactorList = [next(normFactorGen[j]) for j in xrange(len(normFactorGen))]

@@ -8,7 +8,6 @@ import math
 
 
 def medianFilter(dist, window, useEdgePadding):
-
     offset = int(math.floor(window / 2.0))
     length = len(dist)
 
@@ -17,7 +16,6 @@ def medianFilter(dist, window, useEdgePadding):
         dataToFilter = []
         # If using edge padding or if 0 <= context <= length
         if useEdgePadding or (((0 <= x - offset) and (x + offset < length))):
-
             preContext = []
             currentContext = [
                 dist[x],
@@ -55,7 +53,6 @@ def medianFilter(dist, window, useEdgePadding):
 
 
 def getMedian(dist):
-
     assert len(dist) > 0
 
     dist = sorted(dist)

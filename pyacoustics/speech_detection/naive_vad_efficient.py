@@ -46,7 +46,6 @@ def findNextEvent(
 
 
 def naiveVAD(wavFN, silenceThreshold, stepSize, numSteps, startTime=0.0):
-
     endTime = findNextEvent(
         wavFN, startTime, silenceThreshold, stepSize, numSteps, findSilence=True
     )
@@ -56,7 +55,6 @@ def naiveVAD(wavFN, silenceThreshold, stepSize, numSteps, startTime=0.0):
     entryList = []
     try:
         while True:
-
             startTime = findNextEvent(
                 wavFN, endTime, silenceThreshold, stepSize, numSteps, findSilence=False
             )
