@@ -37,5 +37,6 @@ setup(
         "typing_extensions",
     ],
     description="A collection of python scripts for extracting and analyzing acoustics from audio files.",
-    long_description=io.open("README.rst", "r", encoding="utf-8").read(),
+    long_description=io.open("README.md", "r", encoding="utf-8").read(),
+    long_description_content_type="text/markdown",
 )

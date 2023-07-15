@@ -1,18 +1,20 @@
 
--------------
-pyAcoustics
--------------
+# pyAcoustics
 
-.. image:: https://img.shields.io/badge/license-MIT-blue.svg?
-   :target: http://opensource.org/licenses/MIT
+[![](https://img.shields.io/badge/license-MIT-blue.svg?)](http://opensource.org/licenses/MIT)
 
 A collection of python scripts for extracting and analyzing acoustics from audio files.
 
-.. sectnum::
-.. contents::
+# Table of contents
+1. [Common use cases](#common-use-cases)
+2. [Version history](#version-history)
+3. [Requirements](#requirements)
+4. [Installation](#installation)
+5. [Example usage](#example-usage)
+6. [Citing pyAcoustics](#citing-pyacoustics)
+7. [Acknowledgements](#acknowledgements)
 
-Common Use Cases
-================
+## Common Use Cases
 
 What can you do with this library?
 
@@ -45,41 +47,38 @@ What can you do with this library?
 - And more!
 
 
-Major revisions
-================
+## Version history
 
 *Praatio uses semantic versioning (Major.Minor.Patch)*
 
-Please view [CHANGELOG.md](https://github.com/timmahrt/pyAcoustics/blob/main/CHANGELOG.md) for version history.
+Please view [CHANGELOG.md](<https://github.com/timmahrt/pyAcoustics/blob/main/CHANGELOG.md>) for version history.
 
 
-Requirements
-================
+## Requirements
 
 Many of the individual features require different packages.  If you aren't using those
 packages then you don't need to install the dependencies.
 
 pyacoustics.intensity_and_pitch.praat_pi requires 
-`praat <http://www.fon.hum.uva.nl/praat/>`_
+[praat](<http://www.fon.hum.uva.nl/praat/>)
 
 pyacoustics.intensity_and_pitch.get_f0 requires the ESPS getF0 function as implemented 
-by `Snack <http://www.speech.kth.se/snack/>`_ although I recall having difficulty 
+by [Snack](<http://www.speech.kth.se/snack/>) although I recall having difficulty 
 installing it.
 
 pyacoustics.speech_rate/dictionary_estimate.py requires my library 
-`psyle <https://github.com/timmahrt/pysle>`_
+[psyle](<https://github.com/timmahrt/pysle>)
 
 pyacoustics.signals.data_fitting.py requires
-`SciPy <http://www.scipy.org/>`_,
-`NumPy <http://www.numpy.org/>`_, and
-`scikit-learn <http://scikit-learn.org/>`_
+[SciPy](<http://www.scipy.org/>),
+[NumPy](<http://www.numpy.org/>), and
+[scikit-learn](<http://scikit-learn.org/>)
 
 My praatIO library is used extensively and can be downloaded 
-`here <https://github.com/timmahrt/praatIO>`_
+[here](<https://github.com/timmahrt/praatIO>)
 
 
-Installation
-================
+## Installation
 
 PyAcoustics is on pypi and can be installed or upgraded from the command-line shell with pip like so::
 
@@ -94,8 +93,7 @@ If python is not in your path, you'll need to enter the full path e.g.::
 	C:\Python36\python.exe setup.py install
 
     
-Example usage
-================
+## Example usage
 
 See the example folders for a few real-world examples using this library.
 
@@ -121,11 +119,10 @@ See the example folders for a few real-world examples using this library.
 - examples/estimate_speech_rate.py
 
     Calculates the speech rate through a matlab script written by
-    `Uwe Reichel <http://www.phonetik.uni-muenchen.de/~reichelu/>`_
+    [Uwe Reichel](<http://www.phonetik.uni-muenchen.de/~reichelu/>)
     that estimates the location of syllable boundaries.
 
-Citing PyAcoustics
-===============
+## Citing PyAcoustics
 
 PyAcoustics is general purpose coding and doesn't need to be cited
 but if you would like to, it can be cited like so:
@@ -133,8 +130,7 @@ but if you would like to, it can be cited like so:
 Tim Mahrt. PyAcoustics. https://github.com/timmahrt/pyAcoustics, 2016.
 
 
-Acknowledgements
-=================
+## Acknowledgements
 
 PyAcoustics is an ongoing collection of code with contributions from a
 number of projects worked on over several years.  Development of various
